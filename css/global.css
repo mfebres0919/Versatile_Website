@@ -1,0 +1,506 @@
+/* ==========================================================================
+   FONTS — self-hosted (no Google Fonts / Adobe CDN). Only what's in use.
+   Archivo Expanded = headings, logo, buttons (free stand-in for the live
+   site's Aktiv Grotesk Extended, which is Adobe Fonts only)
+   DM Sans = body, nav · DM Mono = small labels (both match the live site)
+   ========================================================================== */
+
+/* archivo - latin, variable weight, expanded width */
+@font-face {
+  font-display: swap;
+  font-family: 'Archivo Expanded';
+  font-style: normal;
+  font-weight: 500 600;
+  font-stretch: 125%;
+  src: url('../fonts/archivo-expanded-latin.woff2') format('woff2');
+}
+
+/* dm-sans - latin, variable weight */
+@font-face {
+  font-display: swap;
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 400 500;
+  src: url('../fonts/dm-sans-latin.woff2') format('woff2');
+}
+
+/* dm-mono-regular - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'DM Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/dm-mono-latin-400.woff2') format('woff2');
+}
+
+
+/* ==========================================================================
+   DESIGN TOKENS — brand colours taken from the live site
+   ========================================================================== */
+
+:root {
+  /* Colors */
+  --color-ink: #120f10;
+  --color-ink-soft: #2a2627;
+  --color-white: #ffffff;
+  --color-paper: #f5f2ee;
+  --color-orange: #da5726;
+  --color-orange-dark: #b8441a;
+  --color-muted: #6b6566;
+  --color-line: rgba(18, 15, 16, 0.12);
+
+  /* Type */
+  --font-heading: 'Archivo Expanded', 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono: 'DM Mono', 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  /* Layout */
+  --container-width: 1320px;
+  --gutter: 1.25rem;
+  --header-height: 4.5rem;
+  --radius: 0.25rem;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --transition: 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --gutter: 3rem;
+    --header-height: 5.5rem;
+  }
+}
+
+
+/* ==========================================================================
+   RESET + BASE
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: var(--header-height);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  color: var(--color-ink);
+  background-color: var(--color-white);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  font-stretch: 125%;
+  font-weight: 600;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-orange);
+  outline-offset: 3px;
+}
+
+
+/* ==========================================================================
+   UTILITIES
+   ========================================================================== */
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  z-index: 200;
+  padding: 0.75rem 1rem;
+  background-color: var(--color-ink);
+  color: var(--color-white);
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* Hidden on screen, still read by screen readers */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Small monospaced label (section eyebrows, meta text) */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+
+/* ==========================================================================
+   BUTTONS
+   Square-cornered, uppercase. On hover/focus a second colour sweeps in from
+   the left (::before scales from 0 to full width), per the MigsFlow
+   handbook. Reduced motion: the colour simply changes.
+   ========================================================================== */
+
+.btn {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 3.25rem;
+  padding: 0.875rem 1.75rem;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  font-family: var(--font-heading);
+  font-stretch: 125%;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.45s var(--ease-out), border-color 0.45s var(--ease-out);
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--btn-sweep);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.45s var(--ease-out);
+}
+
+.btn:hover::before,
+.btn:focus-visible::before {
+  transform: scaleX(1);
+}
+
+.btn__icon {
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+  transition: transform 0.45s var(--ease-out);
+}
+
+.btn:hover .btn__icon,
+.btn:focus-visible .btn__icon {
+  transform: translateX(0.25rem);
+}
+
+/* Orange → white sweep, text turns ink */
+.btn--primary {
+  --btn-sweep: var(--color-white);
+  background-color: var(--color-orange);
+  color: var(--color-white);
+}
+
+.btn--primary:hover,
+.btn--primary:focus-visible {
+  color: var(--color-ink);
+}
+
+/* Ink → orange sweep (for light backgrounds) */
+.btn--dark {
+  --btn-sweep: var(--color-orange);
+  background-color: var(--color-ink);
+  color: var(--color-white);
+}
+
+/* White outline over photos and video; white sweeps in, text turns ink */
+.btn--outline-light {
+  --btn-sweep: var(--color-white);
+  border-color: rgba(255, 255, 255, 0.6);
+  color: var(--color-white);
+}
+
+.btn--outline-light:hover,
+.btn--outline-light:focus-visible {
+  border-color: var(--color-white);
+  color: var(--color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn::before,
+  .btn__icon {
+    transition: none;
+  }
+}
+
+
+/* ==========================================================================
+   HEADER + NAVIGATION
+   Transparent over the hero; .is-scrolled (global.js) turns it white.
+   Mobile: links live in a full-width panel toggled by .nav-toggle.
+   ========================================================================== */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  color: var(--color-white);
+  background-color: transparent;
+  transition: background-color var(--transition), color var(--transition), box-shadow var(--transition);
+}
+
+.header.is-scrolled,
+.header.is-open {
+  background-color: var(--color-white);
+  color: var(--color-ink);
+  box-shadow: 0 1px 0 var(--color-line);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-height);
+}
+
+/* Logo: the V mark (SVG in currentColor, so it follows the header) + name */
+.header__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.header__logo-mark {
+  width: 2rem;
+  height: auto;
+  fill: currentColor;
+}
+
+.header__logo-name {
+  font-family: var(--font-heading);
+  font-stretch: 125%;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* Mobile panel */
+.nav {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  padding: 0.5rem var(--gutter) 2rem;
+  background-color: var(--color-white);
+  color: var(--color-ink);
+  border-top: 1px solid var(--color-line);
+  box-shadow: 0 24px 40px rgba(18, 15, 16, 0.12);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-0.5rem);
+  transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
+}
+
+.header.is-open .nav {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.nav__link {
+  display: block;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--color-line);
+  font-family: var(--font-heading);
+  font-stretch: 125%;
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.nav__link[aria-current='page'] {
+  color: var(--color-orange);
+}
+
+.nav__cta {
+  align-self: flex-start;
+}
+
+/* Hamburger */
+.nav-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-right: -0.5rem;
+  padding: 0.625rem;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.nav-toggle__bar {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: currentColor;
+  transition: transform var(--transition), opacity var(--transition);
+}
+
+.header.is-open .nav-toggle__bar:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.header.is-open .nav-toggle__bar:nth-child(2) {
+  opacity: 0;
+}
+
+.header.is-open .nav-toggle__bar:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+@media (min-width: 1024px) {
+  .header__logo-mark {
+    width: 2.25rem;
+  }
+
+  .header__logo-name {
+    font-size: 0.9375rem;
+  }
+
+  .nav-toggle {
+    display: none;
+  }
+
+  .nav {
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    gap: 2.5rem;
+    padding: 0;
+    background: none;
+    color: inherit;
+    border: 0;
+    box-shadow: none;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  .nav__list {
+    display: flex;
+    gap: 2.25rem;
+  }
+
+  /* Underline draws in from the left on hover; stays under the current page */
+  .nav__link {
+    position: relative;
+    padding: 0.5rem 0;
+    border: 0;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+  }
+
+  .nav__link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.125rem;
+    height: 1px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.45s var(--ease-out);
+  }
+
+  .nav__link:hover::after,
+  .nav__link:focus-visible::after,
+  .nav__link[aria-current='page']::after {
+    transform: scaleX(1);
+  }
+
+  .nav__link[aria-current='page'] {
+    color: inherit;
+  }
+}
