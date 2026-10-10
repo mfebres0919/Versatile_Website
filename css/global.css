@@ -360,7 +360,9 @@ button {
 
 /* ==========================================================================
    HEADER + NAVIGATION
-   Transparent over the hero; .is-scrolled (global.js) turns it white.
+   Transparent over the hero; .is-scrolled (global.js) turns it black,
+   with a faint rule underneath so it doesn't sit like a slab on white
+   sections. The logo and links stay white throughout.
    Mobile: links live in a full-width panel toggled by .nav-toggle.
    ========================================================================== */
 
@@ -377,9 +379,8 @@ button {
 
 .header.is-scrolled,
 .header.is-open {
-  background-color: var(--color-white);
-  color: var(--color-ink);
-  box-shadow: 0 1px 0 var(--color-line);
+  background-color: var(--color-ink);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .header__inner {
@@ -422,10 +423,10 @@ button {
   flex-direction: column;
   gap: 1.75rem;
   padding: 0.5rem var(--gutter) 2rem;
-  background-color: var(--color-white);
-  color: var(--color-ink);
-  border-top: 1px solid var(--color-line);
-  box-shadow: 0 24px 40px rgba(18, 15, 16, 0.12);
+  background-color: var(--color-ink);
+  color: var(--color-white);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 40px rgba(18, 15, 16, 0.3);
   opacity: 0;
   visibility: hidden;
   transform: translateY(-0.5rem);
@@ -441,7 +442,7 @@ button {
 .nav__link {
   display: block;
   padding: 1rem 0;
-  border-bottom: 1px solid var(--color-line);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   font-family: var(--font-heading);
   font-stretch: 125%;
   font-size: 1rem;
