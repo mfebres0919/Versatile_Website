@@ -227,6 +227,12 @@ button {
   transform: none;
 }
 
+/* A button that reveals keeps its hover colour change. transition-property
+   (not the shorthand) so any delay class still applies. */
+.has-reveal .btn.reveal {
+  transition-property: opacity, transform, color, border-color;
+}
+
 .has-reveal .reveal--delay-1 { transition-delay: 0.12s; }
 .has-reveal .reveal--delay-2 { transition-delay: 0.24s; }
 .has-reveal .reveal--delay-3 { transition-delay: 0.36s; }
@@ -239,7 +245,7 @@ button {
    so its lighter layers come through as softer bands of the same colour.
    Place it as the first child of a position: relative block, which should
    leave var(--divider-height) of room at its top.
-   --envelope: hangs down from the top edge (images/svg-dividers).
+   --envelope, --tilt, --wave: hang down from the top edge (images/svg-dividers).
    ========================================================================== */
 
 .section-divider {
@@ -257,6 +263,40 @@ button {
 
 .section-divider--envelope {
   --divider-shape: url('../images/svg-dividers/intersecting-envelope.svg');
+}
+
+.section-divider--tilt {
+  --divider-shape: url('../images/svg-dividers/intersecting-tilt-angles.svg');
+}
+
+.section-divider--wave {
+  --divider-shape: url('../images/svg-dividers/intersecting-wave.svg');
+}
+
+
+/* ==========================================================================
+   ORANGE UNDERLINE (every page)
+   Wrap key words in .mark. Drawn with a background so it follows the words
+   if they wrap. Full width by default; with .has-reveal (global.js) it
+   starts at 0 and draws in once its .reveal block is visible. A second
+   mark in the same block draws in a beat later.
+   ========================================================================== */
+
+.mark {
+  background: linear-gradient(var(--color-orange), var(--color-orange)) left bottom / 100% 0.1em no-repeat;
+}
+
+.has-reveal .reveal .mark {
+  background-size: 0% 0.1em;
+  transition: background-size 1s var(--ease-out) 0.45s;
+}
+
+.has-reveal .reveal .mark ~ .mark {
+  transition-delay: 0.8s;
+}
+
+.has-reveal .reveal.is-visible .mark {
+  background-size: 100% 0.1em;
 }
 
 
@@ -558,4 +598,56 @@ button {
   .nav__link[aria-current='page'] {
     color: inherit;
   }
+}
+
+
+/* ==========================================================================
+   BACK TO TOP (every page) — fixed bottom-right, fades in once the visitor
+   has scrolled past the first screen (global.js). Orange square that turns
+   white on hover, with the arrow nudging up.
+   ========================================================================== */
+
+.to-top {
+  position: fixed;
+  right: clamp(1rem, 3vw, 2rem);
+  bottom: clamp(1rem, 3vw, 2rem);
+  z-index: 90;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius);
+  background-color: var(--color-orange);
+  color: var(--color-white);
+  box-shadow: 0 10px 24px rgba(18, 15, 16, 0.3);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(0.75rem);
+  transition: opacity var(--transition), visibility var(--transition), transform var(--transition),
+    background-color var(--transition), color var(--transition);
+}
+
+.to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.to-top:hover {
+  background-color: var(--color-white);
+  color: var(--color-ink);
+}
+
+.to-top svg {
+  width: 1.375rem;
+  height: 1.375rem;
+  transition: transform 0.45s var(--ease-out);
+}
+
+.to-top:hover svg {
+  transform: translateY(-0.2rem);
 }

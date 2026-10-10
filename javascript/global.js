@@ -60,3 +60,22 @@ if (revealBlocks.length && !window.matchMedia('(prefers-reduced-motion: reduce)'
 
   revealBlocks.forEach((block) => revealObserver.observe(block));
 }
+
+/* Back to top: shows after one screen of scrolling. scrollTo inherits the
+   smooth scroll from CSS, which is already off for reduced motion. */
+const toTop = document.querySelector('[data-to-top]');
+
+if (toTop) {
+  const updateToTop = () => {
+    toTop.classList.toggle('is-visible', window.scrollY > window.innerHeight);
+  };
+
+  updateToTop();
+  window.addEventListener('scroll', updateToTop, { passive: true });
+
+  toTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0 });
+    // Hand focus back to the top so keyboard users continue from there
+    document.querySelector('.header__logo')?.focus({ preventScroll: true });
+  });
+}

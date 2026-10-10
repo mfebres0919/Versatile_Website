@@ -577,26 +577,6 @@
   line-height: 1.12;
 }
 
-/* Orange underline under the key words. Drawn with a background so it
-   follows the words if they wrap. Full width by default; with .has-reveal
-   it starts at 0 and draws in once the statement is visible. */
-.about__mark {
-  background: linear-gradient(var(--color-orange), var(--color-orange)) left bottom / 100% 0.1em no-repeat;
-}
-
-.has-reveal .about__mark {
-  background-size: 0% 0.1em;
-  transition: background-size 1s var(--ease-out) 0.45s;
-}
-
-.has-reveal .about__mark + .about__mark {
-  transition-delay: 0.8s;
-}
-
-.has-reveal .is-visible .about__mark {
-  background-size: 100% 0.1em;
-}
-
 .about__text {
   display: grid;
   gap: 1rem;
@@ -1186,44 +1166,47 @@
 
 /* ==========================================================================
    TAPES
-   Two tilted, overlapping banners. Each tape is wider than the screen so
-   its ends never show; overflow: clip on the section trims everything that
-   sticks out (clip, unlike hidden, doesn't make a scroll container, so
-   page scrolling is untouched). The dark track slides from -50% to 0
+   Two tilted banners crossing in an X. Both sit in the same grid cell, so
+   they cross at the centre of the screen and the steeper the angles, the
+   more of the black tape shows either side of the crossing. Angles are
+   steeper on narrow screens, where the same angle spreads over fewer
+   pixels. Each tape is wider than the screen so its ends never show;
+   overflow: clip on the section trims what sticks out (clip, unlike
+   hidden, doesn't make a scroll container, so page scrolling is
+   untouched). The block padding grows with the screen width so the tilted
+   ends always fit inside it. The dark track slides from -50% to 0
    (rightward), the orange one from 0 to -50% (leftward).
    ========================================================================== */
 
-/* Little top padding: the events block above already ends in white space */
 .tapes {
-  position: relative;
-  padding-block: 0.5rem 2.5rem;
+  --tape-angle: 9deg;
+  display: grid;
+  place-items: center;
+  /* Half the screen width x tan(angle), plus breathing room */
+  padding-block: calc(8vw + 1.25rem);
   overflow: hidden; /* fallback for browsers without clip */
   overflow: clip;
   background-color: var(--color-white);
 }
 
 .tape {
+  grid-area: 1 / 1;
   width: 130%;
-  margin-left: -15%;
   padding-block: 0.875rem;
   overflow: hidden;
   color: var(--color-white);
 }
 
-/* Steeper on phones, where the same angle spreads over fewer pixels */
 .tape--dark {
-  position: relative;
   background-color: var(--color-ink);
-  transform: rotate(5deg);
+  transform: rotate(var(--tape-angle));
 }
 
-/* Pulled up over the dark tape so the two cross */
+/* Laid over the dark tape, tilted the other way */
 .tape--orange {
-  position: relative;
   z-index: 1;
-  margin-top: -1rem;
   background-color: var(--color-orange);
-  transform: rotate(-4deg);
+  transform: rotate(calc(var(--tape-angle) * -0.9));
 }
 
 .tape__track {
@@ -1284,26 +1267,497 @@
 }
 
 @media (min-width: 768px) {
-  .tape--dark {
-    transform: rotate(3deg);
-  }
-
-  .tape--orange {
-    margin-top: -2.75rem;
-    transform: rotate(-2.5deg);
+  .tapes {
+    --tape-angle: 7deg;
+    padding-block: calc(6.5vw + 1.25rem);
   }
 }
 
 @media (min-width: 1024px) {
   .tapes {
-    padding-block: 1rem 3.5rem;
+    --tape-angle: 5deg;
+    padding-block: calc(4.5vw + 1.5rem);
   }
 
   .tape {
     padding-block: 1.125rem;
   }
+}
 
-  .tape--orange {
-    margin-top: -3.75rem;
+
+/* ==========================================================================
+   PROGRAMS
+   Dark section. Phones and tablets: each track stacks (number, label,
+   title, photo, copy). Desktop (1024px+): tracks on the left, each about a
+   screen tall; a photo frame pinned on the right crossfades between them.
+   .is-active (script.js) lights the current track: the outlined number
+   fills orange, the copy brightens, the first workshop gets its orange dash.
+   ========================================================================== */
+
+.programs {
+  position: relative;
+  /* Top padding clears the tilt divider hanging from the top edge */
+  padding-block: calc(4rem + var(--divider-height)) 3rem;
+  color: var(--color-white);
+  background-color: var(--color-ink);
+}
+
+/* The tapes section above is white */
+.programs .section-divider {
+  --divider-color: var(--color-white);
+}
+
+/* Header centred over the tracks */
+.programs__head {
+  max-width: 48rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.programs .about__eyebrow-mark {
+  color: var(--color-white);
+}
+
+.programs__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.programs__title {
+  margin-top: 1.25rem;
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  letter-spacing: -0.01em;
+}
+
+.programs__title-accent {
+  display: block;
+  color: var(--color-orange);
+}
+
+.programs__intro {
+  max-width: 36rem;
+  margin: 1.5rem auto 0;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.programs__body {
+  margin-top: 3rem;
+}
+
+/* ---------- One track ---------- */
+
+.program {
+  padding-block: 3rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Big outlined number. When its track is active, orange pours in from the
+   top: an orange layer clipped to the digits grows from 0% to 100% of
+   their height, and the outline turns orange with it. */
+.program__number {
+  font-family: var(--font-mono);
+  font-size: clamp(4.5rem, 16vw, 9rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.28);
+  background: linear-gradient(var(--color-orange), var(--color-orange)) center top / 100% 0% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  transition: background-size 0.9s var(--ease-out), -webkit-text-stroke-color 0.6s var(--ease-out),
+    opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+}
+
+.program.is-active .program__number {
+  background-size: 100% 100%;
+  -webkit-text-stroke-color: var(--color-orange);
+}
+
+.program__label {
+  margin-top: 1.25rem;
+  color: var(--color-orange);
+}
+
+.program__title {
+  margin-top: 0.75rem;
+  font-size: clamp(1.5rem, 3.4vw, 2.5rem);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+.program__media {
+  margin-top: 1.75rem;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 1rem;
+  background-color: var(--color-ink-soft);
+}
+
+.program__media picture,
+.program__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Copy sits a little dimmer until its track is active */
+.program__text,
+.program__list,
+.program__meta {
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out), filter 0.7s var(--ease-out);
+}
+
+/* Dimmed with a filter, not opacity, so it doesn't fight the fade-up */
+.program:not(.is-active) :is(.program__text, .program__list, .program__meta) {
+  filter: brightness(0.6);
+}
+
+.program__text {
+  max-width: 34rem;
+  margin-top: 1.75rem;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.program__text .mark {
+  color: var(--color-white);
+}
+
+/* Workshop examples: a dash before each; the first one is highlighted */
+.program__list {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.program__item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.875rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.program__item::before {
+  content: '';
+  flex: none;
+  width: 0.75rem;
+  height: 2px;
+  transform: translateY(-0.3em);
+  background-color: currentColor;
+  transition: width 0.6s var(--ease-out), background-color 0.6s var(--ease-out);
+}
+
+.program__item:first-child {
+  color: var(--color-white);
+}
+
+.program.is-active .program__item:first-child::before {
+  width: 1.5rem;
+  background-color: var(--color-orange);
+}
+
+.program__meta {
+  display: grid;
+  gap: 1.25rem;
+  margin: 2rem 0 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.program__meta dt {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.program__meta dd {
+  margin: 0.375rem 0 0;
+  line-height: 1.5;
+}
+
+.program__cta {
+  margin-top: 2rem;
+}
+
+/* Revealing blocks keep their own transitions too (property list only,
+   so the reveal's durations and delay classes still apply) */
+.has-reveal .program__number.reveal {
+  transition-property: opacity, transform, background-size, -webkit-text-stroke-color;
+}
+
+.has-reveal :is(.program__text, .program__list, .program__meta).reveal {
+  transition-property: opacity, transform, filter;
+}
+
+/* ---------- Pinned frame (desktop only) ---------- */
+
+.programs__frame {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .program__meta {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 2rem;
+  }
+
+  /* Landscape crop on wider phones and tablets */
+  .program__media {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+@media (min-width: 1024px) {
+  .programs {
+    padding-block: calc(5.5rem + var(--divider-height)) 4rem;
+  }
+
+  .programs__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 5rem;
+    margin-top: 4rem;
+  }
+
+  /* Each track about a screen tall, its copy centred, so one is in focus
+     at a time as the visitor scrolls */
+  .program {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: calc(100vh - var(--header-height));
+    padding-block: 4rem;
+  }
+
+  .program__media {
+    display: none;
+  }
+
+  /* Stays in view beside the tracks; slides stacked inside it */
+  .programs__frame {
+    position: sticky;
+    top: calc(var(--header-height) + 2rem);
+    display: block;
+    height: calc(100vh - var(--header-height) - 4rem);
+    max-height: 52rem;
+    overflow: hidden;
+    border-radius: 1.25rem;
+    background-color: var(--color-ink-soft);
+  }
+
+  /* Incoming photo fades in and settles from a slight zoom; the outgoing
+     one fades away underneath */
+  .programs__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: scale(1.08);
+    transition: opacity 0.9s var(--ease-out), transform 1.4s var(--ease-out);
+  }
+
+  .programs__slide.is-active {
+    z-index: 1;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .programs__slide picture,
+  .programs__slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .programs__counter {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 2;
+    padding: 0.5rem 0.875rem;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    letter-spacing: 0.1em;
+    background-color: rgba(18, 15, 16, 0.6);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+
+  .programs__counter span {
+    color: var(--color-orange);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .programs__slide,
+  .program__number,
+  .program__text,
+  .program__list,
+  .program__meta,
+  .program__item::before {
+    transition: none;
+  }
+}
+
+
+/* ==========================================================================
+   CTA — "Our impact so far"
+   Warm grey section. .cta__circle is a white layer clipped to a circle
+   whose radius shrinks from "covers everything" (--circle: 0) to a big
+   centred circle (--circle: 1) as the section scrolls in (script.js). The
+   wave divider hangs the Programs black over the top.
+   ========================================================================== */
+
+.cta {
+  --circle: 1; /* formed by default: no JS / reduced motion */
+  --circle-end: max(46vw, 30rem);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: calc(var(--divider-height) + 5rem) 6rem;
+  text-align: center;
+  background-color: #ece8e3;
+}
+
+.cta .section-divider {
+  z-index: 2;
+  --divider-color: var(--color-ink);
+}
+
+.cta__circle {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--color-white);
+  clip-path: circle(calc(var(--circle-end) + (150vmax - var(--circle-end)) * (1 - var(--circle))) at 50% 55%);
+  box-shadow: 0 0 80px rgba(18, 15, 16, 0.08);
+  will-change: clip-path;
+}
+
+.cta__inner {
+  position: relative;
+}
+
+/* Huge faint number behind the headline */
+.cta__ghost {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  font-family: var(--font-heading);
+  font-stretch: 125%;
+  font-size: clamp(8rem, 30vw, 24rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: rgba(18, 15, 16, 0.04);
+  transform: translate(-50%, -55%);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.cta__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.cta__title {
+  max-width: 52rem;
+  margin: 1.5rem auto 0;
+  font-size: clamp(1.625rem, 4vw, 3.25rem);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  text-transform: none;
+  text-wrap: balance;
+}
+
+/* Second sentence in grey, like the reference */
+.cta__title-soft {
+  color: #9a9394;
+}
+
+.cta__actions {
+  margin-top: 3rem;
+}
+
+/* Black pill with a white arrow tile; turns orange on hover */
+.cta__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 0.5rem 0.5rem 0.5rem 1.75rem;
+  border-radius: 999px;
+  font-family: var(--font-heading);
+  font-stretch: 125%;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-white);
+  background-color: var(--color-ink);
+  box-shadow: 0 16px 32px rgba(18, 15, 16, 0.25);
+  transition: background-color var(--transition), box-shadow var(--transition);
+}
+
+.cta__btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  color: var(--color-ink);
+  background-color: var(--color-white);
+  transition: color var(--transition);
+}
+
+.cta__btn-icon svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  transition: transform 0.45s var(--ease-out);
+}
+
+.cta__btn:hover {
+  background-color: var(--color-orange);
+  box-shadow: 0 16px 32px rgba(218, 87, 38, 0.35);
+}
+
+.cta__btn:hover .cta__btn-icon {
+  color: var(--color-orange);
+}
+
+.cta__btn:hover .cta__btn-icon svg {
+  transform: translateX(0.2rem);
+}
+
+.has-reveal .cta__actions .cta__btn {
+  transition-property: background-color, box-shadow;
+}
+
+.cta__email {
+  margin-top: 1.5rem;
+  color: var(--color-muted);
+}
+
+.cta__email a {
+  font-weight: 500;
+  color: var(--color-ink);
+  overflow-wrap: anywhere;
+}
+
+.cta__email a:hover {
+  color: var(--color-orange-dark);
+}
+
+@media (min-width: 1024px) {
+  .cta {
+    min-height: 100vh;
+    padding-block: calc(var(--divider-height) + 7rem) 8rem;
+    display: flex;
+    align-items: center;
   }
 }

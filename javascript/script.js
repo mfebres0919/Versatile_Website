@@ -231,3 +231,37 @@ if (values) {
 
   startValues();
 }
+
+
+/* ==========================================================================
+   HOMEPAGE — programs: light up the track in the middle of the screen
+   Whichever track crosses the middle band of the screen gets .is-active
+   (its number fills orange, its copy brightens). On desktop the pinned
+   frame shows that track's photo and the counter follows. The first track
+   is active from the start so the frame is never empty.
+   ========================================================================== */
+
+const programItems = document.querySelectorAll('[data-program]');
+
+if (programItems.length) {
+  const programSlides = document.querySelectorAll('[data-program-slide]');
+  const programCurrent = document.querySelector('[data-program-current]');
+
+  function setProgram(index) {
+    programItems.forEach((item, i) => item.classList.toggle('is-active', i === index));
+    programSlides.forEach((slide, i) => slide.classList.toggle('is-active', i === index));
+    if (programCurrent) programCurrent.textContent = String(index + 1).padStart(2, '0');
+  }
+
+  setProgram(0);
+
+  // A thin band across the middle of the screen: a track is "current"
+  // while any part of it sits in that band
+  const programObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) setProgram([...programItems].indexOf(entry.target));
+    });
+  }, { rootMargin: '-45% 0px -45% 0px' });
+
+  programItems.forEach((item) => programObserver.observe(item));
+}

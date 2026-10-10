@@ -356,7 +356,7 @@
             </p>
 
             <p class="about__statement reveal">
-              A <span class="about__mark">community-based</span>, <span class="about__mark">artist-centered</span> organization.
+              A <span class="mark">community-based</span>, <span class="mark">artist-centered</span> organization.
             </p>
 
             <div class="about__text reveal">
@@ -837,11 +837,233 @@
         </div>
     </section>
 
-    <!-- TODO: remaining sections are built one at a time from inspiration
-         screenshots. #programs is the target of the hero's main button. -->
-    <div id="programs"></div>
+    <!-- ========================================================================
+         PROGRAMS — the three programming tracks.
+         Desktop (1024px+): copy scrolls on the left while a photo frame stays
+         pinned on the right. As each track reaches the middle of the screen
+         (script.js) its number turns from an outline to solid orange, the
+         frame crossfades to its photo and the counter updates.
+         Phones and tablets: each track stacks with its photo inline; the
+         number still lights up as it's reached.
+         Photos: from the live homepage, cropped 4:5 (960x1200 desktop,
+         640x800 phones). Copy condensed from the live programming text.
+         Inside each track, the number fades in first, then the rest follows
+         piece by piece as it scrolls in (.reveal, global.js).
+         "Learn More" opens the live site, where the full track details are.
+         ======================================================================== -->
+    <section class="programs" id="programs" aria-labelledby="programs-title">
+      <!-- Tilt-angles divider: the white tapes section hanging down into the dark -->
+      <div class="section-divider section-divider--tilt" aria-hidden="true"></div>
+
+      <div class="container">
+
+        <header class="programs__head">
+          <p class="programs__eyebrow eyebrow reveal">
+            <span class="about__eyebrow-mark" aria-hidden="true">{<span class="about__eyebrow-dot"></span>}</span>
+            Our Programming
+          </p>
+          <h2 class="programs__title reveal reveal--delay-1" id="programs-title">Three tracks. <span class="programs__title-accent">One mission.</span></h2>
+          <p class="programs__intro reveal reveal--delay-2">
+            Equipping creatives with the tools, strategy and infrastructure to monetize their art form,
+            and reinvesting it in the communities they come from.
+          </p>
+        </header>
+
+        <div class="programs__body">
+          <div class="programs__list">
+          <article class="program" id="track-1" aria-labelledby="track-1-title" data-program>
+            <p class="program__number reveal" aria-hidden="true">01.</p>
+            <p class="program__label eyebrow reveal reveal--delay-1">Track 01</p>
+            <h3 class="program__title reveal reveal--delay-2" id="track-1-title">Business &amp; Operational Infrastructure</h3>
+
+            <!-- Phones and tablets: the photo sits inline. Desktop uses the
+                 pinned frame instead, so this one never loads there. -->
+            <div class="program__media reveal">
+                <picture>
+                  <source srcset="images/programs/track-1-business-m.webp" type="image/webp">
+                  <img src="images/programs/track-1-business-m.jpg" alt="Three people posing together at a night event" width="640" height="800" loading="lazy" decoding="async">
+                </picture>
+            </div>
+
+            <p class="program__text reveal">The business foundation every creative needs but rarely gets: <span class="mark">practical, step-by-step instruction</span> in the mechanics of running a business, grounded in the lived experience of the communities we serve.</p>
+
+            <ul class="program__list reveal reveal--delay-1" aria-label="Workshop examples">
+                  <li class="program__item">Business registration &amp; legal structure</li>
+                  <li class="program__item">Pricing strategy for creatives</li>
+                  <li class="program__item">Contracts, invoicing &amp; getting paid</li>
+            </ul>
+
+            <dl class="program__meta reveal reveal--delay-2">
+              <div>
+                <dt class="eyebrow">Format</dt>
+                <dd>Workshops · 1:1 technical assistance · Cohorts</dd>
+              </div>
+              <div>
+                <dt class="eyebrow">Who it’s for</dt>
+                <dd>Creative professionals, entrepreneurs &amp; small business owners</dd>
+              </div>
+            </dl>
+
+            <a class="btn btn--primary program__cta reveal reveal--delay-1" href="https://www.versatileimage.org/" target="_blank" rel="noopener">
+              Learn More
+              <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+              <span class="visually-hidden">about Business &amp; Operational Infrastructure (opens in a new tab)</span>
+            </a>
+          </article>
+          <article class="program" id="track-2" aria-labelledby="track-2-title" data-program>
+            <p class="program__number reveal" aria-hidden="true">02.</p>
+            <p class="program__label eyebrow reveal reveal--delay-1">Track 02</p>
+            <h3 class="program__title reveal reveal--delay-2" id="track-2-title">Creative Technical Skills</h3>
+
+            <!-- Phones and tablets: the photo sits inline. Desktop uses the
+                 pinned frame instead, so this one never loads there. -->
+            <div class="program__media reveal">
+                <picture>
+                  <source srcset="images/programs/track-2-creative-m.webp" type="image/webp">
+                  <img src="images/programs/track-2-creative-m.jpg" alt="A performer in sunglasses singing into a microphone on stage" width="640" height="800" loading="lazy" decoding="async">
+                </picture>
+            </div>
+
+            <p class="program__text reveal">Talent is not enough. <span class="mark">Professional-grade technical training</span>, taught by working professionals, so creatives can <span class="mark">charge what they’re worth</span>.</p>
+
+            <ul class="program__list reveal reveal--delay-1" aria-label="Workshop examples">
+                  <li class="program__item">Graphic &amp; digital design: Adobe, Canva, Figma</li>
+                  <li class="program__item">Photography, lighting &amp; photo editing</li>
+                  <li class="program__item">Video production &amp; social content</li>
+            </ul>
+
+            <dl class="program__meta reveal reveal--delay-2">
+              <div>
+                <dt class="eyebrow">Format</dt>
+                <dd>Workshops led by working professionals</dd>
+              </div>
+              <div>
+                <dt class="eyebrow">Who it’s for</dt>
+                <dd>Creative professionals seeking discipline-specific training</dd>
+              </div>
+            </dl>
+
+            <a class="btn btn--primary program__cta reveal reveal--delay-1" href="https://www.versatileimage.org/" target="_blank" rel="noopener">
+              Learn More
+              <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+              <span class="visually-hidden">about Creative Technical Skills (opens in a new tab)</span>
+            </a>
+          </article>
+          <article class="program" id="track-3" aria-labelledby="track-3-title" data-program>
+            <p class="program__number reveal" aria-hidden="true">03.</p>
+            <p class="program__label eyebrow reveal reveal--delay-1">Track 03</p>
+            <h3 class="program__title reveal reveal--delay-2" id="track-3-title">Community Open Workshops</h3>
+
+            <!-- Phones and tablets: the photo sits inline. Desktop uses the
+                 pinned frame instead, so this one never loads there. -->
+            <div class="program__media reveal">
+                <picture>
+                  <source srcset="images/programs/track-3-community-m.webp" type="image/webp">
+                  <img src="images/programs/track-3-community-m.jpg" alt="A person dancing in the street at the UNITY Block Party" width="640" height="800" loading="lazy" decoding="async">
+                </picture>
+            </div>
+
+            <p class="program__text reveal"><span class="mark">Free and open to all.</span> Hosted by our partner artists, who are <span class="mark">paid to teach their craft</span>, sharing skills that are usually gatekept by cost, location or social capital.</p>
+
+            <ul class="program__list reveal reveal--delay-1" aria-label="Workshop examples">
+                  <li class="program__item">Smartphone photography &amp; social content</li>
+                  <li class="program__item">Painting, drawing &amp; community murals</li>
+                  <li class="program__item">Music, beat-making &amp; spoken word</li>
+            </ul>
+
+            <dl class="program__meta reveal reveal--delay-2">
+              <div>
+                <dt class="eyebrow">Format</dt>
+                <dd>Free, drop-in sessions</dd>
+              </div>
+              <div>
+                <dt class="eyebrow">Who it’s for</dt>
+                <dd>Everyone in the community</dd>
+              </div>
+            </dl>
+
+            <a class="btn btn--primary program__cta reveal reveal--delay-1" href="https://www.versatileimage.org/" target="_blank" rel="noopener">
+              Learn More
+              <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+              <span class="visually-hidden">about Community Open Workshops (opens in a new tab)</span>
+            </a>
+          </article>
+          </div>
+
+          <!-- Desktop only: the pinned frame. Decorative copies of the photos
+               (each track's inline photo carries the description). -->
+          <div class="programs__frame" aria-hidden="true">
+            <div class="programs__slide is-active" data-program-slide>
+              <picture>
+                <source srcset="images/programs/track-1-business.webp" type="image/webp">
+                <img src="images/programs/track-1-business.jpg" alt="" width="960" height="1200" loading="lazy" decoding="async">
+              </picture>
+            </div>
+            <div class="programs__slide" data-program-slide>
+              <picture>
+                <source srcset="images/programs/track-2-creative.webp" type="image/webp">
+                <img src="images/programs/track-2-creative.jpg" alt="" width="960" height="1200" loading="lazy" decoding="async">
+              </picture>
+            </div>
+            <div class="programs__slide" data-program-slide>
+              <picture>
+                <source srcset="images/programs/track-3-community.webp" type="image/webp">
+                <img src="images/programs/track-3-community.jpg" alt="" width="960" height="1200" loading="lazy" decoding="async">
+              </picture>
+            </div>
+            <p class="programs__counter"><span data-program-current>01</span> / 03</p>
+          </div>
+        </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         CTA — "Our impact so far".
+         The Programs black hangs into it as a wave divider. Behind the copy a
+         white layer starts out covering the whole section, then shrinks into
+         a big circle as the visitor scrolls (script.js sets --circle 0 → 1),
+         showing the warm grey in the corners. Without JavaScript or with
+         reduced motion the circle is simply already formed.
+         A huge faint "300+" sits behind the headline. Partner email is the
+         one the live site uses.
+         ======================================================================== -->
+    <section class="cta" aria-labelledby="cta-title" data-cta>
+      <div class="section-divider section-divider--wave" aria-hidden="true"></div>
+      <div class="cta__circle" aria-hidden="true"></div>
+
+      <div class="container cta__inner">
+        <p class="cta__ghost" aria-hidden="true">300+</p>
+
+        <p class="cta__eyebrow eyebrow reveal">
+          <span class="about__eyebrow-mark" aria-hidden="true">{<span class="about__eyebrow-dot"></span>}</span>
+          Our impact so far
+        </p>
+        <h2 class="cta__title reveal reveal--delay-1" id="cta-title">
+          Together, these tracks have reached <span class="mark">over 300 participants</span>.
+          <span class="cta__title-soft">Help us reach the next 300.</span>
+        </h2>
+
+        <div class="cta__actions reveal reveal--delay-2">
+          <a class="cta__btn" href="mailto:info@versatileimage.org?subject=Partner%20With%20Us">
+            Partner With Us
+            <span class="cta__btn-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+            </span>
+          </a>
+          <p class="cta__email">or email us at <a href="mailto:info@versatileimage.org">info@versatileimage.org</a></p>
+        </div>
+      </div>
+    </section>
 
   </main>
+
+  <!-- Back to top: fades in after one screen of scrolling (global.js) -->
+  <button class="to-top" type="button" aria-label="Back to top" data-to-top>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="square" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6" /></svg>
+  </button>
 
 </body>
 </html>
