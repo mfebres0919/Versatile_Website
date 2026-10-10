@@ -140,9 +140,11 @@
     </section>
 
     <!-- ========================================================================
-         LOGOS — "Brands we've worked with", drifting right to left under the
-         hero. The list is repeated once (aria-hidden, empty alts) so the loop
-         is seamless; screen readers only get the first copy. The edges blur
+         LOGOS — "Brands we've worked with" under the hero, in two rows of six:
+         the top row drifts left, the bottom row right. Each list holds its six
+         logos twice (wide enough for any screen) and is repeated once
+         (aria-hidden) so the loop is seamless; screen readers get each logo's
+         name once. The edges blur
          and fade so logos drift in and out rather than clip. Pauses on hover;
          stands still and scrolls sideways for reduced motion.
          Logos: from the live site, converted to white silhouettes on
@@ -153,156 +155,311 @@
         <h2 class="logos__title eyebrow" id="logos-title">Brands we've worked with</h2>
       </div>
 
-      <div class="logos__marquee">
-        <div class="logos__track">
-          <ul class="logos__list">
-              <li class="logos__item">
-                <picture>
-                  <source srcset="images/logos/lululemon.webp" type="image/webp">
-                  <img src="images/logos/lululemon.png" alt="lululemon" width="54" height="56" loading="lazy" decoding="async">
-                </picture>
-              </li>
-              <li class="logos__item">
-                <picture>
-                  <source srcset="images/logos/keybank.webp" type="image/webp">
-                  <img src="images/logos/keybank.png" alt="KeyBank" width="94" height="56" loading="lazy" decoding="async">
-                </picture>
-              </li>
-              <li class="logos__item">
-                <picture>
-                  <source srcset="images/logos/afropunk.webp" type="image/webp">
-                  <img src="images/logos/afropunk.png" alt="Afropunk" width="80" height="56" loading="lazy" decoding="async">
-                </picture>
-              </li>
-              <li class="logos__item">
-                <picture>
-                  <source srcset="images/logos/altabank.webp" type="image/webp">
-                  <img src="images/logos/altabank.png" alt="Altabank" width="91" height="56" loading="lazy" decoding="async">
-                </picture>
-              </li>
-              <li class="logos__item">
-                <picture>
-                  <source srcset="images/logos/netflix.webp" type="image/webp">
-                  <img src="images/logos/netflix.png" alt="Netflix" width="176" height="49" loading="lazy" decoding="async">
-                </picture>
-              </li>
-              <li class="logos__item">
-                <picture>
-                  <source srcset="images/logos/nike.webp" type="image/webp">
-                  <img src="images/logos/nike.png" alt="Nike" width="154" height="56" loading="lazy" decoding="async">
-                </picture>
-              </li>
-              <li class="logos__item">
-                <picture>
-                  <source srcset="images/logos/makaya-caters.webp" type="image/webp">
-                  <img src="images/logos/makaya-caters.png" alt="Makaya Caters" width="114" height="56" loading="lazy" decoding="async">
-                </picture>
-              </li>
-              <li class="logos__item">
-                <picture>
-                  <source srcset="images/logos/afro-paradigm.webp" type="image/webp">
-                  <img src="images/logos/afro-paradigm.png" alt="Afro Paradigm" width="86" height="56" loading="lazy" decoding="async">
-                </picture>
-              </li>
-              <li class="logos__item">
-                <picture>
-                  <source srcset="images/logos/utah-black-chamber.webp" type="image/webp">
-                  <img src="images/logos/utah-black-chamber.png" alt="Utah Black Chamber of Commerce" width="176" height="45" loading="lazy" decoding="async">
-                </picture>
-              </li>
-              <li class="logos__item">
-                <picture>
-                  <source srcset="images/logos/ublac.webp" type="image/webp">
-                  <img src="images/logos/ublac.png" alt="UBLAC, Utah Black Artists Collective" width="127" height="53" loading="lazy" decoding="async">
-                </picture>
-              </li>
-              <li class="logos__item">
-                <picture>
-                  <source srcset="images/logos/us-open.webp" type="image/webp">
-                  <img src="images/logos/us-open.png" alt="US Open" width="90" height="56" loading="lazy" decoding="async">
-                </picture>
-              </li>
-              <li class="logos__item">
-                <picture>
-                  <source srcset="images/logos/patagonia.webp" type="image/webp">
-                  <img src="images/logos/patagonia.png" alt="Patagonia" width="176" height="35" loading="lazy" decoding="async">
-                </picture>
-              </li>
-          </ul>
-          <ul class="logos__list" aria-hidden="true">
-              <li class="logos__item">
-                <picture>
-                  <source srcset="images/logos/lululemon.webp" type="image/webp">
-                  <img src="images/logos/lululemon.png" alt="" width="54" height="56" loading="lazy" decoding="async">
-                </picture>
-              </li>
-              <li class="logos__item">
-                <picture>
-                  <source srcset="images/logos/keybank.webp" type="image/webp">
-                  <img src="images/logos/keybank.png" alt="" width="94" height="56" loading="lazy" decoding="async">
-                </picture>
-              </li>
-              <li class="logos__item">
-                <picture>
-                  <source srcset="images/logos/afropunk.webp" type="image/webp">
-                  <img src="images/logos/afropunk.png" alt="" width="80" height="56" loading="lazy" decoding="async">
-                </picture>
-              </li>
-              <li class="logos__item">
-                <picture>
-                  <source srcset="images/logos/altabank.webp" type="image/webp">
-                  <img src="images/logos/altabank.png" alt="" width="91" height="56" loading="lazy" decoding="async">
-                </picture>
-              </li>
-              <li class="logos__item">
-                <picture>
-                  <source srcset="images/logos/netflix.webp" type="image/webp">
-                  <img src="images/logos/netflix.png" alt="" width="176" height="49" loading="lazy" decoding="async">
-                </picture>
-              </li>
-              <li class="logos__item">
-                <picture>
-                  <source srcset="images/logos/nike.webp" type="image/webp">
-                  <img src="images/logos/nike.png" alt="" width="154" height="56" loading="lazy" decoding="async">
-                </picture>
-              </li>
-              <li class="logos__item">
-                <picture>
-                  <source srcset="images/logos/makaya-caters.webp" type="image/webp">
-                  <img src="images/logos/makaya-caters.png" alt="" width="114" height="56" loading="lazy" decoding="async">
-                </picture>
-              </li>
-              <li class="logos__item">
-                <picture>
-                  <source srcset="images/logos/afro-paradigm.webp" type="image/webp">
-                  <img src="images/logos/afro-paradigm.png" alt="" width="86" height="56" loading="lazy" decoding="async">
-                </picture>
-              </li>
-              <li class="logos__item">
-                <picture>
-                  <source srcset="images/logos/utah-black-chamber.webp" type="image/webp">
-                  <img src="images/logos/utah-black-chamber.png" alt="" width="176" height="45" loading="lazy" decoding="async">
-                </picture>
-              </li>
-              <li class="logos__item">
-                <picture>
-                  <source srcset="images/logos/ublac.webp" type="image/webp">
-                  <img src="images/logos/ublac.png" alt="" width="127" height="53" loading="lazy" decoding="async">
-                </picture>
-              </li>
-              <li class="logos__item">
-                <picture>
-                  <source srcset="images/logos/us-open.webp" type="image/webp">
-                  <img src="images/logos/us-open.png" alt="" width="90" height="56" loading="lazy" decoding="async">
-                </picture>
-              </li>
-              <li class="logos__item">
-                <picture>
-                  <source srcset="images/logos/patagonia.webp" type="image/webp">
-                  <img src="images/logos/patagonia.png" alt="" width="176" height="35" loading="lazy" decoding="async">
-                </picture>
-              </li>
-          </ul>
+      <div class="logos__rows">
+        <div class="logos__marquee logos__marquee--left">
+          <div class="logos__track">
+            <ul class="logos__list">
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/lululemon.webp" type="image/webp">
+                    <img src="images/logos/lululemon.png" alt="lululemon" width="54" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/keybank.webp" type="image/webp">
+                    <img src="images/logos/keybank.png" alt="KeyBank" width="94" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/afropunk.webp" type="image/webp">
+                    <img src="images/logos/afropunk.png" alt="Afropunk" width="80" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/altabank.webp" type="image/webp">
+                    <img src="images/logos/altabank.png" alt="Altabank" width="91" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/netflix.webp" type="image/webp">
+                    <img src="images/logos/netflix.png" alt="Netflix" width="176" height="49" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/nike.webp" type="image/webp">
+                    <img src="images/logos/nike.png" alt="Nike" width="154" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/lululemon.webp" type="image/webp">
+                    <img src="images/logos/lululemon.png" alt="" width="54" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/keybank.webp" type="image/webp">
+                    <img src="images/logos/keybank.png" alt="" width="94" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/afropunk.webp" type="image/webp">
+                    <img src="images/logos/afropunk.png" alt="" width="80" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/altabank.webp" type="image/webp">
+                    <img src="images/logos/altabank.png" alt="" width="91" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/netflix.webp" type="image/webp">
+                    <img src="images/logos/netflix.png" alt="" width="176" height="49" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/nike.webp" type="image/webp">
+                    <img src="images/logos/nike.png" alt="" width="154" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+            </ul>
+            <ul class="logos__list" aria-hidden="true">
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/lululemon.webp" type="image/webp">
+                    <img src="images/logos/lululemon.png" alt="" width="54" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/keybank.webp" type="image/webp">
+                    <img src="images/logos/keybank.png" alt="" width="94" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/afropunk.webp" type="image/webp">
+                    <img src="images/logos/afropunk.png" alt="" width="80" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/altabank.webp" type="image/webp">
+                    <img src="images/logos/altabank.png" alt="" width="91" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/netflix.webp" type="image/webp">
+                    <img src="images/logos/netflix.png" alt="" width="176" height="49" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/nike.webp" type="image/webp">
+                    <img src="images/logos/nike.png" alt="" width="154" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/lululemon.webp" type="image/webp">
+                    <img src="images/logos/lululemon.png" alt="" width="54" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/keybank.webp" type="image/webp">
+                    <img src="images/logos/keybank.png" alt="" width="94" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/afropunk.webp" type="image/webp">
+                    <img src="images/logos/afropunk.png" alt="" width="80" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/altabank.webp" type="image/webp">
+                    <img src="images/logos/altabank.png" alt="" width="91" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/netflix.webp" type="image/webp">
+                    <img src="images/logos/netflix.png" alt="" width="176" height="49" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/nike.webp" type="image/webp">
+                    <img src="images/logos/nike.png" alt="" width="154" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="logos__marquee logos__marquee--right">
+          <div class="logos__track">
+            <ul class="logos__list">
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/makaya-caters.webp" type="image/webp">
+                    <img src="images/logos/makaya-caters.png" alt="Makaya Caters" width="114" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/afro-paradigm.webp" type="image/webp">
+                    <img src="images/logos/afro-paradigm.png" alt="Afro Paradigm" width="86" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/utah-black-chamber.webp" type="image/webp">
+                    <img src="images/logos/utah-black-chamber.png" alt="Utah Black Chamber of Commerce" width="176" height="45" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/ublac.webp" type="image/webp">
+                    <img src="images/logos/ublac.png" alt="UBLAC, Utah Black Artists Collective" width="127" height="53" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/us-open.webp" type="image/webp">
+                    <img src="images/logos/us-open.png" alt="US Open" width="90" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/patagonia.webp" type="image/webp">
+                    <img src="images/logos/patagonia.png" alt="Patagonia" width="176" height="35" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/makaya-caters.webp" type="image/webp">
+                    <img src="images/logos/makaya-caters.png" alt="" width="114" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/afro-paradigm.webp" type="image/webp">
+                    <img src="images/logos/afro-paradigm.png" alt="" width="86" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/utah-black-chamber.webp" type="image/webp">
+                    <img src="images/logos/utah-black-chamber.png" alt="" width="176" height="45" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/ublac.webp" type="image/webp">
+                    <img src="images/logos/ublac.png" alt="" width="127" height="53" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/us-open.webp" type="image/webp">
+                    <img src="images/logos/us-open.png" alt="" width="90" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/patagonia.webp" type="image/webp">
+                    <img src="images/logos/patagonia.png" alt="" width="176" height="35" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+            </ul>
+            <ul class="logos__list" aria-hidden="true">
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/makaya-caters.webp" type="image/webp">
+                    <img src="images/logos/makaya-caters.png" alt="" width="114" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/afro-paradigm.webp" type="image/webp">
+                    <img src="images/logos/afro-paradigm.png" alt="" width="86" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/utah-black-chamber.webp" type="image/webp">
+                    <img src="images/logos/utah-black-chamber.png" alt="" width="176" height="45" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/ublac.webp" type="image/webp">
+                    <img src="images/logos/ublac.png" alt="" width="127" height="53" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/us-open.webp" type="image/webp">
+                    <img src="images/logos/us-open.png" alt="" width="90" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/patagonia.webp" type="image/webp">
+                    <img src="images/logos/patagonia.png" alt="" width="176" height="35" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/makaya-caters.webp" type="image/webp">
+                    <img src="images/logos/makaya-caters.png" alt="" width="114" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/afro-paradigm.webp" type="image/webp">
+                    <img src="images/logos/afro-paradigm.png" alt="" width="86" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/utah-black-chamber.webp" type="image/webp">
+                    <img src="images/logos/utah-black-chamber.png" alt="" width="176" height="45" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/ublac.webp" type="image/webp">
+                    <img src="images/logos/ublac.png" alt="" width="127" height="53" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/us-open.webp" type="image/webp">
+                    <img src="images/logos/us-open.png" alt="" width="90" height="56" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+                <li class="logos__item">
+                  <picture>
+                    <source srcset="images/logos/patagonia.webp" type="image/webp">
+                    <img src="images/logos/patagonia.png" alt="" width="176" height="35" loading="lazy" decoding="async">
+                  </picture>
+                </li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -1022,7 +1179,8 @@
 
     <!-- ========================================================================
          CTA — "Our impact so far".
-         The Programs black hangs into it as a wave divider. Behind the copy a
+         The Programs black hangs into it as a wave divider, and the Final
+         CTA's orange rises into its foot as an envelope. Behind the copy a
          white layer starts out covering the whole section, then shrinks into
          a big circle as the visitor scrolls (script.js sets --circle 0 → 1),
          showing the warm grey in the corners. Without JavaScript or with
@@ -1056,8 +1214,40 @@
           <p class="cta__email">or email us at <a href="mailto:info@versatileimage.org">info@versatileimage.org</a></p>
         </div>
       </div>
+
+      <div class="section-divider section-divider--envelope section-divider--up" aria-hidden="true"></div>
     </section>
 
+
+    <!-- ========================================================================
+         FINAL CTA — "Let's create." from the bottom of the live homepage,
+         restyled with event photos set into the headline. Each photo pill
+         opens from nothing as the headline scrolls in (styles.css, .reveal);
+         without JavaScript or with reduced motion they're simply open.
+         Photos reuse the event-reel images, so nothing new downloads.
+         ======================================================================== -->
+    <section class="final" aria-labelledby="final-title">
+      <div class="container">
+        <h2 class="final__title reveal" id="final-title">
+          <span class="final__line">Let’s create</span>
+          <span class="final__line"><span class="final__pill final__pill--1" aria-hidden="true"><picture><source srcset="images/events/unity-block-party-23.webp" type="image/webp"><img src="images/events/unity-block-party-23.jpg" alt="" width="320" height="256" loading="lazy" decoding="async"></picture></span> something <span class="final__pill final__pill--2" aria-hidden="true"><picture><source srcset="images/events/celebrating-black-joy.webp" type="image/webp"><img src="images/events/celebrating-black-joy.jpg" alt="" width="320" height="256" loading="lazy" decoding="async"></picture></span></span></span>
+          <span class="final__line">together <span class="final__pill final__pill--3" aria-hidden="true"><picture><source srcset="images/events/bb-block-party-brooklyn.webp" type="image/webp"><img src="images/events/bb-block-party-brooklyn.jpg" alt="" width="320" height="256" loading="lazy" decoding="async"></picture></span></span></span>
+        </h2>
+
+        <p class="final__text reveal reveal--delay-1">
+          Think of us as your partners in progress, rolling up our sleeves alongside you. Whether
+          you’re launching your first business, sharpening your craft, or just curious what’s
+          possible, our workshops and programs meet you where you are.
+        </p>
+
+        <div class="final__actions reveal reveal--delay-2">
+          <a class="btn final__btn" href="mailto:info@versatileimage.org?subject=Let%E2%80%99s%20Create">
+            Partner With Us
+            <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </a>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- Back to top: fades in after one screen of scrolling (global.js) -->

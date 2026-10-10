@@ -290,37 +290,44 @@
   color: rgba(255, 255, 255, 0.55);
 }
 
-.logos__marquee {
+.logos__rows {
   position: relative;
   margin-top: 2rem;
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
 }
 
-.logos__marquee::before,
-.logos__marquee::after {
+/* Each row fades its logos out at both ends */
+.logos__marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
+}
+
+/* Blur over both ends of both rows, strongest at the edge. These sit on
+   the wrapper, outside the masked rows: a mask on an ancestor would stop
+   the blur from seeing the logos behind it. */
+.logos__rows::before,
+.logos__rows::after {
   content: '';
   position: absolute;
   top: 0;
   bottom: 0;
   z-index: 1;
-  width: 18%;
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
+  width: 22%;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   pointer-events: none;
 }
 
-.logos__marquee::before {
+.logos__rows::before {
   left: 0;
-  -webkit-mask-image: linear-gradient(90deg, #000, transparent);
-  mask-image: linear-gradient(90deg, #000, transparent);
+  -webkit-mask-image: linear-gradient(90deg, #000 30%, transparent);
+  mask-image: linear-gradient(90deg, #000 30%, transparent);
 }
 
-.logos__marquee::after {
+.logos__rows::after {
   right: 0;
-  -webkit-mask-image: linear-gradient(270deg, #000, transparent);
-  mask-image: linear-gradient(270deg, #000, transparent);
+  -webkit-mask-image: linear-gradient(270deg, #000 30%, transparent);
+  mask-image: linear-gradient(270deg, #000 30%, transparent);
 }
 
 .logos__track {
@@ -357,9 +364,18 @@
   opacity: 1;
 }
 
+/* Rows sit close together */
+.logos__marquee + .logos__marquee {
+  margin-top: 0.75rem;
+}
+
 @media (prefers-reduced-motion: no-preference) {
-  .logos__track {
-    animation: logos-drift 45s linear infinite;
+  .logos__marquee--left .logos__track {
+    animation: logos-drift 50s linear infinite;
+  }
+
+  .logos__marquee--right .logos__track {
+    animation: logos-drift 55s linear infinite reverse;
   }
 
   .logos__marquee:hover .logos__track {
@@ -452,9 +468,14 @@
 }
 
 /* "ourselves.": orange outline, filled from the left by --fill (0 → 1).
-   fit-content keeps the fill measured against the word, not the line. */
+   fit-content keeps the fill measured against the word, not the line.
+   Half again the size of "to re-introduce" so it lands as the payoff;
+   still fits a phone screen (about 11vw for ten letters). */
 .about__accent {
   width: fit-content;
+  margin-top: 0.08em;
+  font-size: 1.55em;
+  line-height: 0.95;
   margin-inline: auto;
   color: transparent;
   -webkit-text-stroke: 0.02em var(--color-orange);
@@ -1620,7 +1641,7 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding-block: calc(var(--divider-height) + 5rem) 6rem;
+  padding-block: calc(var(--divider-height) + 5rem) calc(var(--divider-height) + 6rem);
   text-align: center;
   background-color: #ece8e3;
 }
@@ -1628,6 +1649,11 @@
 .cta .section-divider {
   z-index: 2;
   --divider-color: var(--color-ink);
+}
+
+/* The Final CTA's orange rising into the bottom edge */
+.cta .section-divider--up {
+  --divider-color: var(--color-orange);
 }
 
 .cta__circle {
@@ -1728,16 +1754,17 @@
 }
 
 /* Attention bounce: two quick hops, then a rest, on a 3.5s loop. Stops
-   while hovered or focused so it's easy to click, and never runs for
+   (and settles) while hovered or focused so it's easy to click, and never runs for
    reduced motion. */
 @media (prefers-reduced-motion: no-preference) {
   .cta__btn {
     animation: cta-bounce 3.5s ease-in-out 1.5s infinite;
   }
 
+  /* Settles back down (rather than freezing mid-hop) while it's being used */
   .cta__btn:hover,
   .cta__btn:focus-visible {
-    animation-play-state: paused;
+    animation: none;
   }
 }
 
@@ -1790,8 +1817,140 @@
 @media (min-width: 1024px) {
   .cta {
     min-height: 100vh;
-    padding-block: calc(var(--divider-height) + 7rem) 8rem;
+    padding-block: calc(var(--divider-height) + 7rem) calc(var(--divider-height) + 8rem);
     display: flex;
     align-items: center;
+  }
+}
+
+
+/* ==========================================================================
+   FINAL CTA — "Let's create something together"
+   Brand-orange band. Big centred headline with rounded photo pills sitting
+   in the lines; pills are sized in em, so they scale with the type. With
+   .has-reveal each pill starts 0 wide and opens once the headline is
+   visible, one after another, pushing the words apart.
+   ========================================================================== */
+
+.final {
+  padding-block: 6rem;
+  text-align: center;
+  color: var(--color-ink);
+  background-color: var(--color-orange);
+}
+
+.final__title {
+  /* Sized so the widest line ("[photo] something [photo]", about 11.5em)
+     always fits the screen on one row */
+  font-size: clamp(1.5rem, calc((100vw - 3rem) / 11.5), 6rem);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.final__line {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0 0.25em;
+}
+
+.final__line + .final__line {
+  margin-top: 0.12em;
+}
+
+.final__pill {
+  display: inline-block;
+  width: 1.45em;
+  height: 0.95em;
+  overflow: hidden;
+  border-radius: 0.22em;
+  background-color: var(--color-ink);
+  box-shadow: 0 0.08em 0.25em rgba(18, 15, 16, 0.25);
+  vertical-align: middle;
+}
+
+.final__pill picture,
+.final__pill img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Opening pills. The width and the gap around it grow together on a
+   slow ease-in-out, so the words glide apart rather than jump. The photo
+   inside keeps its full size and stays centred, so the pill reveals it
+   like a widening window instead of squashing it, while it fades in and
+   settles from a slight zoom. */
+.has-reveal .final__title .final__pill {
+  position: relative;
+  width: 0;
+  margin-inline: -0.125em; /* cancels the line gap while closed */
+  transition:
+    width 1.4s var(--ease-in-out),
+    margin 1.4s var(--ease-in-out);
+}
+
+.has-reveal .final__title .final__pill picture {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1.45em;
+  transform: translateX(-50%);
+}
+
+.has-reveal .final__title .final__pill img {
+  opacity: 0;
+  transform: scale(1.25);
+  transition:
+    opacity 1s ease,
+    transform 1.8s var(--ease-out);
+  transition-delay: inherit;
+}
+
+.has-reveal .final__title.is-visible .final__pill {
+  width: 1.45em;
+  margin-inline: 0;
+}
+
+.has-reveal .final__title.is-visible .final__pill img {
+  opacity: 1;
+  transform: none;
+}
+
+.has-reveal .final__title .final__pill--1 { transition-delay: 0.3s; }
+.has-reveal .final__title .final__pill--2 { transition-delay: 0.6s; }
+.has-reveal .final__title .final__pill--3 { transition-delay: 0.9s; }
+
+.final__text {
+  max-width: 38rem;
+  margin: 2.5rem auto 0;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+
+.final__actions {
+  margin-top: 2.25rem;
+}
+
+/* Ink outline; ink sweeps in on hover and the text turns white */
+.final__btn {
+  --btn-sweep: var(--color-ink);
+  border-color: var(--color-ink);
+  color: var(--color-ink);
+}
+
+.final__btn:hover,
+.final__btn:focus-visible {
+  color: var(--color-white);
+}
+
+.has-reveal .final__actions .final__btn {
+  transition-property: color, border-color;
+}
+
+@media (min-width: 1024px) {
+  .final {
+    padding-block: 8rem;
   }
 }

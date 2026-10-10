@@ -62,6 +62,7 @@
   --radius: 0.25rem;
   --divider-height: clamp(2.5rem, 7vw, 6rem);
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --transition: 0.3s ease;
 }
 
@@ -246,6 +247,7 @@ button {
    Place it as the first child of a position: relative block, which should
    leave var(--divider-height) of room at its top.
    --envelope, --tilt, --wave: hang down from the top edge (images/svg-dividers).
+   Add --up to flip one onto the bottom edge instead.
    ========================================================================== */
 
 .section-divider {
@@ -271,6 +273,15 @@ button {
 
 .section-divider--wave {
   --divider-shape: url('../images/svg-dividers/intersecting-wave.svg');
+}
+
+/* Flipped to sit on the bottom edge and rise up into its own section,
+   for when the colour below should reach up rather than the one above
+   hang down. Leave var(--divider-height) of room at the bottom instead. */
+.section-divider--up {
+  top: auto;
+  bottom: -1px;
+  transform: scaleY(-1);
 }
 
 
@@ -618,7 +629,8 @@ button {
   width: 3.25rem;
   height: 3.25rem;
   padding: 0;
-  border: 0;
+  /* White edge keeps it visible on the orange final section too */
+  border: 2px solid rgba(255, 255, 255, 0.85);
   border-radius: var(--radius);
   background-color: var(--color-orange);
   color: var(--color-white);
