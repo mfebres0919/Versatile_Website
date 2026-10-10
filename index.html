@@ -314,8 +314,12 @@
             distance and stays as a faint ghost; "ourselves" arrives as an
             orange outline that fills from the left. Without JavaScript, or
             for reduced motion, the three phrases simply sit stacked.
-         2. Body: intro copy and stats on the left, values cards on the right.
-         3. Past events: a drifting reel of event photos, then a short caption.
+         2. Body: intro copy, counting stats and a block party photo with a
+            spinning "creative state" badge on the left; values on the right.
+            Blocks marked .reveal fade up as they scroll in (global.js); the
+            statement's orange underlines draw in when it does.
+         3. James Baldwin pull quote on a full-width orange band.
+         4. Past events: a drifting reel of event photos, then a short caption.
          Copy is from the live homepage; the values are drawn from it too.
          ======================================================================== -->
     <section class="about" id="about" aria-labelledby="about-title">
@@ -344,11 +348,11 @@
             About Us
           </p>
 
-          <p class="about__statement">
-            A community-based, artist-centered organization.
+          <p class="about__statement reveal">
+            A <span class="about__mark">community-based</span>, <span class="about__mark">artist-centered</span> organization.
           </p>
 
-          <div class="about__text">
+          <div class="about__text reveal">
             <p>
               Over the last decade, Versatile Image has evolved — from helping businesses craft their
               stories through an artistic, social-impact-driven lens, to becoming something rooted even
@@ -361,39 +365,67 @@
             </p>
           </div>
 
-          <ul class="about__stats">
+          <!-- Numbers count up from 0 when they scroll in (script.js); the
+               final values are written here so they read correctly without it -->
+          <ul class="about__stats reveal" data-count-group>
             <li class="about__stat">
-              <span class="about__stat-number">300+</span>
+              <span class="about__stat-number" data-count-to="300" data-count-suffix="+">300+</span>
               <span class="about__stat-label">Participants reached</span>
             </li>
             <li class="about__stat">
-              <span class="about__stat-number">3</span>
+              <span class="about__stat-number" data-count-to="3">3</span>
               <span class="about__stat-label">Core programming tracks</span>
             </li>
             <li class="about__stat">
-              <span class="about__stat-number">10+</span>
+              <span class="about__stat-number" data-count-to="10" data-count-suffix="+">10+</span>
               <span class="about__stat-label">Years of creative work</span>
             </li>
           </ul>
+
+          <!-- Frame from the UNITY Block Party film. 1200x750 desktop,
+               720x450 (-m) phones. The badge's ring text spins slowly; the V
+               mark in the middle stays still. -->
+          <div class="about__photo reveal">
+            <picture>
+              <source media="(max-width: 767px)" srcset="images/about/about-block-party-m.webp" type="image/webp" width="720" height="450">
+              <source media="(max-width: 767px)" srcset="images/about/about-block-party-m.jpg" type="image/jpeg" width="720" height="450">
+              <source srcset="images/about/about-block-party.webp" type="image/webp">
+              <img src="images/about/about-block-party.jpg" alt="A crowd with their hands in the air, dancing in the street at the UNITY Block Party" width="1200" height="750" loading="lazy" decoding="async">
+            </picture>
+
+            <div class="about__badge" aria-hidden="true">
+              <svg class="about__badge-ring" viewBox="0 0 160 160">
+                <defs>
+                  <path id="about-badge-path" d="M80,80 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0" />
+                </defs>
+                <text>
+                  <textPath href="#about-badge-path" textLength="372" lengthAdjust="spacing">LOCATED IN YOUR CREATIVE STATE™ ✦ </textPath>
+                </text>
+              </svg>
+              <svg class="about__badge-mark" viewBox="0 0 966 829">
+                <path fill-rule="evenodd" d="M414 0h138v139H414zM0 139h966L483 829zM414 139v275h138V139z" />
+              </svg>
+            </div>
+          </div>
         </div>
 
         <div class="about__values">
-          <h3 class="about__values-title">Our Values</h3>
+          <h3 class="about__values-title reveal">Our Values</h3>
 
           <ul class="values">
-            <li class="value-card">
+            <li class="value-card reveal reveal--delay-1">
               <span class="value-card__number eyebrow" aria-hidden="true">01</span>
               <span class="value-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7.5" r="3" /><path d="M6.5 20v-1a5.5 5.5 0 0 1 11 0v1" /><circle cx="5" cy="10" r="2.2" /><path d="M1.5 19a3.8 3.8 0 0 1 3.5-4" /><circle cx="19" cy="10" r="2.2" /><path d="M22.5 19a3.8 3.8 0 0 0-3.5-4" /></svg></span>
               <h4 class="value-card__title">Community-Based</h4>
               <p class="value-card__text">Rooted close to home. Our work starts in, and answers to, the underrepresented communities we serve.</p>
             </li>
-            <li class="value-card">
+            <li class="value-card reveal reveal--delay-2">
               <span class="value-card__number eyebrow" aria-hidden="true">02</span>
               <span class="value-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19 7-7 3 3-7 7Z" /><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18Z" /><path d="m2 2 7.6 7.6" /><circle cx="11" cy="11" r="2" /></svg></span>
               <h4 class="value-card__title">Artist-Centered</h4>
               <p class="value-card__text">Talent is not enough. We give creatives the tools, strategy and infrastructure to monetize their art form.</p>
             </li>
-            <li class="value-card">
+            <li class="value-card reveal reveal--delay-3">
               <span class="value-card__number eyebrow" aria-hidden="true">03</span>
               <span class="value-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12a8.5 8.5 0 0 1-14.6 5.9" /><path d="M3.5 12A8.5 8.5 0 0 1 18.1 6.1" /><path d="M18.5 2.5v3.8h-3.8" /><path d="M5.5 21.5v-3.8h3.8" /><path d="M12 8.5v7" /><path d="M14 9.75h-2.75a1.25 1.25 0 0 0 0 2.5h1.5a1.25 1.25 0 0 1 0 2.5H10" /></svg></span>
               <h4 class="value-card__title">Reinvested Locally</h4>
@@ -403,6 +435,22 @@
         </div>
 
       </div>
+
+      <!-- Pull quote, as on the live homepage. Signature: from the live site,
+           recoloured to ink on transparent (WebP + PNG). -->
+      <figure class="about__quote">
+        <div class="container">
+          <blockquote class="about__quote-text reveal">
+            <p>“Artists are here to disturb the peace.”</p>
+          </blockquote>
+          <figcaption class="about__quote-cite reveal reveal--delay-1">
+            <picture>
+              <source srcset="images/about/james-baldwin-signature.webp" type="image/webp">
+              <img src="images/about/james-baldwin-signature.png" alt="James Baldwin" width="252" height="45" loading="lazy" decoding="async">
+            </picture>
+          </figcaption>
+        </div>
+      </figure>
 
       <!-- Past events: cards drift right to left inside a soft tray, fading out
            at both sides. The list is repeated once (aria-hidden) so the loop is
@@ -646,7 +694,7 @@
           </div>
         </div>
 
-        <div class="about__events-copy">
+        <div class="about__events-copy reveal">
           <h3 class="about__events-title">A decade of showing up</h3>
           <p class="about__events-text">
             Block parties, premieres, memorials and late-night conversations — from Salt Lake City to
