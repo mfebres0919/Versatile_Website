@@ -68,8 +68,9 @@
     <!-- ========================================================================
          HERO — UNITY Block Party footage looping behind the headline.
          The poster <picture> sits underneath and is what loads first; the
-         video (script.js) fades in over it once it's playing. No video for
-         reduced motion or Save-Data: the poster simply stays.
+         video autoplays (muted + playsinline, which phones allow) and fades
+         in over it once it's playing. For reduced motion or Save-Data,
+         script.js removes the video and the poster simply stays.
          Video: 21s, 1280x720, no audio, ~2.8 MB (assets/video). Cut from the
          block party film on YouTube; the full download is in /source-video
          (not deployed). Poster: 1600x900 desktop, 720x1280 (-m) phones.
@@ -84,7 +85,7 @@
           <source srcset="images/home/hero-poster.webp" type="image/webp">
           <img class="hero__poster" src="images/home/hero-poster.jpg" alt="" width="1600" height="900" fetchpriority="high" decoding="async">
         </picture>
-        <video class="hero__video" muted loop playsinline preload="none" data-hero-video>
+        <video class="hero__video" autoplay muted loop playsinline data-hero-video>
           <source src="assets/video/hero-loop.mp4" type="video/mp4">
         </video>
       </div>

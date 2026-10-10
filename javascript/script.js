@@ -1,27 +1,45 @@
 /* ==========================================================================
    HOMEPAGE — looping background videos (hero + Say Their Names memorial)
-   The videos have no autoplay attribute: this starts them, so they never
-   run for visitors who asked for reduced motion or less data (Save-Data).
-   They keep the poster photo instead. Once frames are actually playing, a
-   video fades in over its poster (.is-playing). Encoded H.264 High@4.0 so
-   older phones can decode them too. Each pauses while off
-   screen, and its round button lets anyone pause it for good.
+   Phones only reliably autoplay a video that is muted, inline and marked
+   autoplay. The hero has those attributes in the HTML; the memorial gets
+   autoplay here just before it scrolls into view, so it doesn't download
+   on page load. For reduced motion or Save-Data the video is removed and
+   only the poster shows. Once frames are actually playing, a video fades
+   in over its poster (.is-playing). Each pauses while off screen; its
+   round button pauses it for good and always shows the real state.
+   Encoded H.264 High@4.0 so older phones can decode them too.
    ========================================================================== */
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const saveData = navigator.connection?.saveData === true;
 
 function setupLoopVideo(video, toggle) {
-  if (!video || reduceMotion || saveData) return;
+  if (!video) return;
+
+  if (reduceMotion || saveData) {
+    video.remove();
+    return;
+  }
 
   let pausedByVisitor = false;
   const label = toggle.dataset.videoLabel || 'background video';
 
+  // Some browsers check the property, not just the attribute
+  video.muted = true;
+
   video.addEventListener('playing', () => video.classList.add('is-playing'), { once: true });
 
-  // Phones can refuse to autoplay (e.g. iPhone Low Power Mode). Then the
-  // poster stays, and the first tap anywhere on the page, which phones do
-  // count as permission, tries again.
+  // The button mirrors what the video is really doing
+  const syncToggle = () => {
+    toggle.classList.toggle('is-paused', video.paused);
+    toggle.setAttribute('aria-label', `${video.paused ? 'Play' : 'Pause'} ${label}`);
+  };
+  video.addEventListener('play', syncToggle);
+  video.addEventListener('pause', syncToggle);
+
+  // If a phone still refuses (e.g. iPhone Low Power Mode), the poster stays
+  // and the first tap anywhere on the page, which counts as permission,
+  // tries again.
   const play = () => video.play().catch(() => {
     document.addEventListener('touchend', () => {
       if (!pausedByVisitor) video.play().catch(() => {});
@@ -29,19 +47,22 @@ function setupLoopVideo(video, toggle) {
   });
 
   toggle.hidden = false;
+  syncToggle();
   toggle.addEventListener('click', () => {
     pausedByVisitor = !video.paused;
     if (pausedByVisitor) video.pause();
     else play();
-    toggle.classList.toggle('is-paused', pausedByVisitor);
-    toggle.setAttribute('aria-label', `${pausedByVisitor ? 'Play' : 'Pause'} ${label}`);
   });
 
-  // Only spend battery and bandwidth on it while it's on screen
+  // Start (and start loading) just before it's on screen; pause when it leaves
   new IntersectionObserver(([entry]) => {
-    if (entry.isIntersecting && !pausedByVisitor) play();
-    else video.pause();
-  }).observe(video);
+    if (entry.isIntersecting && !pausedByVisitor) {
+      video.autoplay = true;
+      play();
+    } else {
+      video.pause();
+    }
+  }, { rootMargin: '200px 0px' }).observe(video);
 }
 
 setupLoopVideo(document.querySelector('[data-hero-video]'), document.querySelector('[data-hero-video-toggle]'));
