@@ -607,6 +607,15 @@
   color: var(--color-muted);
 }
 
+/* ---------- Calls to action ---------- */
+
+.about__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
 /* ---------- Stats ---------- */
 
 .about__stats {
