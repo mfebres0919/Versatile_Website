@@ -541,7 +541,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 4rem;
-  padding-block: 3rem 4rem;
+  padding-block: 3rem 2.5rem;
 }
 
 /* { • } About Us — braces in ink, the dot in orange */
@@ -983,7 +983,7 @@
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
     align-items: start;
     gap: 5rem;
-    padding-block: 4rem 5rem;
+    padding-block: 4rem 3rem;
   }
 
   .about__stats {
@@ -1002,7 +1002,7 @@
    ========================================================================== */
 
 .about__events {
-  padding-bottom: 6rem;
+  padding-bottom: 3rem;
 }
 
 .events-reel {
@@ -1032,12 +1032,12 @@
 
 .events-reel::before {
   left: 0;
-  background: linear-gradient(90deg, var(--color-orange-dark), rgba(184, 68, 26, 0));
+  background: linear-gradient(90deg, var(--color-black), rgba(184, 68, 26, 0));
 }
 
 .events-reel::after {
   right: 0;
-  background: linear-gradient(270deg, var(--color-orange-dark), rgba(184, 68, 26, 0));
+  background: linear-gradient(270deg, var(--color-black), rgba(184, 68, 26, 0));
 }
 
 .events-reel__track {
@@ -1168,7 +1168,7 @@
 /* Title left; text and button stacked on the right */
 @media (min-width: 1024px) {
   .about__events {
-    padding-bottom: 8rem;
+    padding-bottom: 4rem;
   }
 
   .about__events-copy {
@@ -1180,5 +1180,130 @@
 
   .about__events-title {
     grid-row: span 2;
+  }
+}
+
+
+/* ==========================================================================
+   TAPES
+   Two tilted, overlapping banners. Each tape is wider than the screen so
+   its ends never show; overflow: clip on the section trims everything that
+   sticks out (clip, unlike hidden, doesn't make a scroll container, so
+   page scrolling is untouched). The dark track slides from -50% to 0
+   (rightward), the orange one from 0 to -50% (leftward).
+   ========================================================================== */
+
+/* Little top padding: the events block above already ends in white space */
+.tapes {
+  position: relative;
+  padding-block: 0.5rem 2.5rem;
+  overflow: hidden; /* fallback for browsers without clip */
+  overflow: clip;
+  background-color: var(--color-white);
+}
+
+.tape {
+  width: 130%;
+  margin-left: -15%;
+  padding-block: 0.875rem;
+  overflow: hidden;
+  color: var(--color-white);
+}
+
+/* Steeper on phones, where the same angle spreads over fewer pixels */
+.tape--dark {
+  position: relative;
+  background-color: var(--color-ink);
+  transform: rotate(5deg);
+}
+
+/* Pulled up over the dark tape so the two cross */
+.tape--orange {
+  position: relative;
+  z-index: 1;
+  margin-top: -1rem;
+  background-color: var(--color-orange);
+  transform: rotate(-4deg);
+}
+
+.tape__track {
+  display: flex;
+  width: max-content;
+}
+
+.tape__list {
+  display: flex;
+  flex: none;
+  align-items: center;
+}
+
+.tape__item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding-right: 1.5rem;
+  font-family: var(--font-heading);
+  font-stretch: 125%;
+  font-size: clamp(1.125rem, 2.2vw, 2rem);
+  font-weight: 600;
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.tape__mark {
+  width: 0.85em;
+  height: auto;
+  flex: none;
+  fill: currentColor;
+}
+
+/* The V marks on the dark tape pick up the orange */
+.tape--dark .tape__mark {
+  fill: var(--color-orange);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tape--dark .tape__track {
+    animation: tape-right 60s linear infinite;
+  }
+
+  .tape--orange .tape__track {
+    animation: tape-left 55s linear infinite;
+  }
+}
+
+@keyframes tape-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+@keyframes tape-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (min-width: 768px) {
+  .tape--dark {
+    transform: rotate(3deg);
+  }
+
+  .tape--orange {
+    margin-top: -2.75rem;
+    transform: rotate(-2.5deg);
+  }
+}
+
+@media (min-width: 1024px) {
+  .tapes {
+    padding-block: 1rem 3.5rem;
+  }
+
+  .tape {
+    padding-block: 1.125rem;
+  }
+
+  .tape--orange {
+    margin-top: -3.75rem;
   }
 }
