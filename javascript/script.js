@@ -167,6 +167,26 @@ if (countGroup && !reduceMotion) {
 
 
 /* ==========================================================================
+   HOMEPAGE — "disturb" underline in the Baldwin quote
+   Draws only once the word has scrolled up past the lower third of the
+   screen, so the visitor actually sees it open (not while the quote is
+   still fading in at the bottom edge). Reduced motion: never hidden.
+   ========================================================================== */
+
+const scribble = document.querySelector('[data-scribble]');
+
+if (scribble && !reduceMotion) {
+  document.documentElement.classList.add('has-scribble');
+
+  new IntersectionObserver(([entry], observer) => {
+    if (!entry.isIntersecting) return;
+    scribble.classList.add('is-drawn');
+    observer.disconnect();
+  }, { rootMargin: '0px 0px -35% 0px' }).observe(scribble);
+}
+
+
+/* ==========================================================================
    HOMEPAGE — values carousel
    The row is a native scroller with snap points (styles.css), so swipes
    follow the finger and settle on a card. Arrows step one card; after the

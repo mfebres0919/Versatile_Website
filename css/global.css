@@ -764,7 +764,9 @@ button {
 
 .footer {
   position: relative;
-  padding-block: calc(var(--divider-height) + 4.5rem) 2rem;
+  /* Bottom padding clears the fixed back-to-top button, so it never
+     sits over the legal line */
+  padding-block: calc(var(--divider-height) + 4.5rem) 5.5rem;
   color: rgba(255, 255, 255, 0.72);
   background-color: var(--color-ink);
 }
@@ -938,12 +940,13 @@ button {
   vertical-align: super;
 }
 
+/* Phones and tablets: logo, legal line, then the credit, stacked.
+   1200px+: one row with the credit centred between logo and legal. */
 .footer__bottom {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem 2rem;
+  display: grid;
+  grid-template-areas: 'logo' 'legal' 'credit';
+  justify-items: start;
+  gap: 0.75rem;
   margin-top: 3rem;
   padding-top: 1.5rem;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
@@ -970,10 +973,9 @@ button {
 }
 
 /* Legal line with the site credit under it */
-.footer__meta {
-  display: grid;
-  gap: 0.35rem;
-}
+.footer__logo { grid-area: logo; }
+.footer__legal { grid-area: legal; }
+.footer__credit { grid-area: credit; }
 
 .footer__credit a {
   color: var(--color-white);
@@ -988,8 +990,16 @@ button {
   color: var(--color-orange);
 }
 
-@media (min-width: 768px) {
-  .footer__meta {
+@media (min-width: 1200px) {
+  .footer__bottom {
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-areas: 'logo credit legal';
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .footer__legal {
+    justify-self: end;
     text-align: right;
   }
 }
@@ -998,9 +1008,6 @@ button {
    for half), Explore and Follow share the last row. From 900px all four
    sit in one row. */
 @media (max-width: 767px) {
-  .footer {
-    padding-bottom: 5.5rem; /* clears the back-to-top button */
-  }
 
   .footer__col--wide {
     grid-column: 1 / -1;
