@@ -3,7 +3,8 @@
    The videos have no autoplay attribute: this starts them, so they never
    run for visitors who asked for reduced motion or less data (Save-Data).
    They keep the poster photo instead. Once frames are actually playing, a
-   video fades in over its poster (.is-playing). Each pauses while off
+   video fades in over its poster (.is-playing). Encoded H.264 High@4.0 so
+   older phones can decode them too. Each pauses while off
    screen, and its round button lets anyone pause it for good.
    ========================================================================== */
 
@@ -18,8 +19,14 @@ function setupLoopVideo(video, toggle) {
 
   video.addEventListener('playing', () => video.classList.add('is-playing'), { once: true });
 
-  // Browsers can refuse to play (e.g. low-power mode); the poster just stays
-  const play = () => video.play().catch(() => {});
+  // Phones can refuse to autoplay (e.g. iPhone Low Power Mode). Then the
+  // poster stays, and the first tap anywhere on the page, which phones do
+  // count as permission, tries again.
+  const play = () => video.play().catch(() => {
+    document.addEventListener('touchend', () => {
+      if (!pausedByVisitor) video.play().catch(() => {});
+    }, { once: true, passive: true });
+  });
 
   toggle.hidden = false;
   toggle.addEventListener('click', () => {
