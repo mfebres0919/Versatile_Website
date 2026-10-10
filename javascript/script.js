@@ -27,7 +27,14 @@ function setupLoopVideo(video, toggle) {
   // Some browsers check the property, not just the attribute
   video.muted = true;
 
-  video.addEventListener('playing', () => video.classList.add('is-playing'), { once: true });
+  // Show the footage as soon as frames are moving. The hero can already
+  // be playing by the time this deferred script runs (its autoplay
+  // attribute starts it while the page is still loading), in which case
+  // 'playing' has already fired, so check for that too.
+  const reveal = () => video.classList.add('is-playing');
+  video.addEventListener('playing', reveal, { once: true });
+  video.addEventListener('timeupdate', reveal, { once: true });
+  if (!video.paused && video.readyState >= 3) reveal();
 
   // The button mirrors what the video is really doing
   const syncToggle = () => {
@@ -54,7 +61,9 @@ function setupLoopVideo(video, toggle) {
     else play();
   });
 
-  // Start (and start loading) just before it's on screen; pause when it leaves
+  // Start (and start loading) a good screen and a half before it's on
+  // screen, so it's already running when the visitor gets there; pause
+  // once it's that far away again
   new IntersectionObserver(([entry]) => {
     if (entry.isIntersecting && !pausedByVisitor) {
       video.autoplay = true;
@@ -62,7 +71,7 @@ function setupLoopVideo(video, toggle) {
     } else {
       video.pause();
     }
-  }, { rootMargin: '200px 0px' }).observe(video);
+  }, { rootMargin: '150% 0px' }).observe(video);
 }
 
 setupLoopVideo(document.querySelector('[data-hero-video]'), document.querySelector('[data-hero-video-toggle]'));
