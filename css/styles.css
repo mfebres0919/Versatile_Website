@@ -418,6 +418,8 @@
 
 .about__intro {
   padding-block: 7rem 3rem;
+  color: var(--color-white);
+  background-color: var(--color-ink);
 }
 
 .about__title {
@@ -498,12 +500,18 @@
   will-change: transform, opacity;
 }
 
-/* The body rises into the empty lower part of the stage while
-   "ourselves." is still on screen, instead of after a half-screen gap */
-.about__intro.is-pinned + .about__body {
+/* White block for the body and events. It leaves room at the top for the
+   envelope divider (the intro's black hanging down into it). */
+.about__main {
   position: relative;
+  padding-top: var(--divider-height);
+  background-color: var(--color-white);
+}
+
+/* Pinned: the block rises over the empty lower part of the stage while
+   "ourselves." is still on screen, instead of after a half-screen gap */
+.about__intro.is-pinned + .about__main {
   margin-top: -26vh;
-  padding-top: 0;
 }
 
 @media (min-width: 1024px) {
@@ -515,9 +523,8 @@
     height: 400vh;
   }
 
-  .about__intro.is-pinned + .about__body {
+  .about__intro.is-pinned + .about__main {
     margin-top: -24vh;
-    padding-top: 0;
   }
 }
 
@@ -639,21 +646,115 @@
 
 .about__photo {
   position: relative;
-  margin-top: 4.5rem;
+  margin: 4.5rem 0 0;
 }
 
-.about__photo picture,
-.about__photo img {
-  width: 100%;
+/* Poster underneath, video fading in over it once it plays */
+.about__media {
+  position: relative;
   aspect-ratio: 16 / 10;
-  object-fit: cover;
+  overflow: hidden;
   border-radius: 1rem;
+  /* Shows while the poster is still loading */
+  background-color: var(--color-ink);
 }
 
-.about__photo picture {
-  overflow: hidden;
-  /* Shows while the photo is still loading */
-  background-color: var(--color-paper);
+.about__media picture,
+.about__poster,
+.about__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about__video {
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.about__video.is-playing {
+  opacity: 1;
+}
+
+/* Pause / play, bottom-left over the footage (same as the hero's) */
+.about__video-toggle {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  background-color: rgba(18, 15, 16, 0.35);
+  color: var(--color-white);
+  cursor: pointer;
+  transition: background-color var(--transition), color var(--transition);
+}
+
+.about__video-toggle[hidden] {
+  display: none;
+}
+
+.about__video-toggle:hover {
+  background-color: var(--color-white);
+  color: var(--color-ink);
+}
+
+.about__video-toggle svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  fill: currentColor;
+}
+
+.about__icon-play,
+.about__video-toggle.is-paused .about__icon-pause {
+  display: none;
+}
+
+.about__video-toggle.is-paused .about__icon-play {
+  display: block;
+}
+
+/* "Where it all began" + link to the full film */
+.about__caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  margin-top: 1rem;
+}
+
+.about__caption .eyebrow {
+  color: var(--color-orange);
+}
+
+.about__caption-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-heading);
+  font-stretch: 125%;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: color var(--transition);
+}
+
+.about__caption-link svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.about__caption-link:hover {
+  color: var(--color-orange);
 }
 
 /* Round ink badge hanging off the photo's top edge, ringed in white so it
@@ -888,8 +989,7 @@
    Two identical lists in one track; the track slides from 0 to -50%, where
    the second list sits exactly where the first began, so there's no seam.
    Cards are spaced with margin (not gap) so both lists measure the same.
-   A gradient mask on the viewport fades the cards into the tray at each
-   side.
+   Dark orange gradients over each side fade the cards out as they go.
    ========================================================================== */
 
 .about__events {
@@ -897,17 +997,38 @@
 }
 
 .events-reel {
+  position: relative;
   padding-block: 0.75rem;
+  overflow: hidden;
   border-radius: 1.25rem;
   background-color: var(--color-paper);
 }
 
-/* The fade lives here, not on the tray, so the tray stays solid and only
-   the cards dissolve into it */
 .events-reel__viewport {
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+}
+
+/* Dark orange fades over each side, so the cards slide off into the
+   brand colour */
+.events-reel::before,
+.events-reel::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  width: 12%;
+  pointer-events: none;
+}
+
+.events-reel::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--color-orange-dark), rgba(184, 68, 26, 0));
+}
+
+.events-reel::after {
+  right: 0;
+  background: linear-gradient(270deg, var(--color-orange-dark), rgba(184, 68, 26, 0));
 }
 
 .events-reel__track {

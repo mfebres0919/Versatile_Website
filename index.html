@@ -308,7 +308,8 @@
 
     <!-- ========================================================================
          ABOUT — two parts.
-         1. Intro: "Hey neighbor. / Allow us / to re-introduce ourselves."
+         1. Intro, white on black: "Hey neighbor. / Allow us / to re-introduce
+            ourselves."
             The stage pins while the visitor scrolls through a tall track
             (script.js). Each phrase rises in, then sinks back into the
             distance and stays as a faint ghost; "ourselves" arrives as an
@@ -339,117 +340,139 @@
         </div>
       </div>
 
-      <div class="container about__body">
+      <!-- White block holding the body and events. It rises over the foot of
+           the black intro; the envelope divider on its top edge is the
+           intro's black hanging down into it. -->
+      <div class="about__main">
+        <div class="section-divider section-divider--envelope" aria-hidden="true"></div>
 
-        <div class="about__content">
-          <p class="about__eyebrow eyebrow">
-            <span class="about__eyebrow-mark" aria-hidden="true">{<span class="about__eyebrow-dot"></span>}</span>
-            About Us
-          </p>
+        <div class="container about__body">
 
-          <p class="about__statement reveal">
-            A <span class="about__mark">community-based</span>, <span class="about__mark">artist-centered</span> organization.
-          </p>
-
-          <div class="about__text reveal">
-            <p>
-              Over the last decade, Versatile Image has evolved — from helping businesses craft their
-              stories through an artistic, social-impact-driven lens, to becoming something rooted even
-              closer to home: a nonprofit dedicated to equipping creative professionals and entrepreneurs
-              with the tools to build real, sustainable income.
+          <div class="about__content">
+            <p class="about__eyebrow eyebrow">
+              <span class="about__eyebrow-mark" aria-hidden="true">{<span class="about__eyebrow-dot"></span>}</span>
+              About Us
             </p>
-            <p>
-              Our mission is to bridge the gap between cultural expression and economic opportunity,
-              particularly within underrepresented communities.
+
+            <p class="about__statement reveal">
+              A <span class="about__mark">community-based</span>, <span class="about__mark">artist-centered</span> organization.
             </p>
+
+            <div class="about__text reveal">
+              <p>
+                Over the last decade, Versatile Image has evolved — from helping businesses craft their
+                stories through an artistic, social-impact-driven lens, to becoming something rooted even
+                closer to home: a nonprofit dedicated to equipping creative professionals and entrepreneurs
+                with the tools to build real, sustainable income.
+              </p>
+              <p>
+                Our mission is to bridge the gap between cultural expression and economic opportunity,
+                particularly within underrepresented communities.
+              </p>
+            </div>
+
+            <!-- Numbers count up from 0 when they scroll in (script.js); the
+                 final values are written here so they read correctly without it -->
+            <ul class="about__stats reveal" data-count-group>
+              <li class="about__stat">
+                <span class="about__stat-number" data-count-to="300" data-count-suffix="+">300+</span>
+                <span class="about__stat-label">Participants reached</span>
+              </li>
+              <li class="about__stat">
+                <span class="about__stat-number" data-count-to="3">3</span>
+                <span class="about__stat-label">Core programming tracks</span>
+              </li>
+              <li class="about__stat">
+                <span class="about__stat-number" data-count-to="10" data-count-suffix="+">10+</span>
+                <span class="about__stat-label">Years of creative work</span>
+              </li>
+            </ul>
+
+            <!-- Pull quote, as on the live homepage: quote set as text, with
+                 the same James Baldwin signature (from the live site, recoloured
+                 to ink on transparent, WebP + PNG) -->
+            <figure class="about__quote reveal">
+              <blockquote class="about__quote-text">
+                <p>“Artists are here to disturb the peace.”</p>
+              </blockquote>
+              <figcaption class="about__quote-cite">
+                <picture>
+                  <source srcset="images/about/james-baldwin-signature.webp" type="image/webp">
+                  <img src="images/about/james-baldwin-signature.png" alt="James Baldwin" width="252" height="45" loading="lazy" decoding="async">
+                </picture>
+              </figcaption>
+            </figure>
           </div>
 
-          <!-- Numbers count up from 0 when they scroll in (script.js); the
-               final values are written here so they read correctly without it -->
-          <ul class="about__stats reveal" data-count-group>
-            <li class="about__stat">
-              <span class="about__stat-number" data-count-to="300" data-count-suffix="+">300+</span>
-              <span class="about__stat-label">Participants reached</span>
-            </li>
-            <li class="about__stat">
-              <span class="about__stat-number" data-count-to="3">3</span>
-              <span class="about__stat-label">Core programming tracks</span>
-            </li>
-            <li class="about__stat">
-              <span class="about__stat-number" data-count-to="10" data-count-suffix="+">10+</span>
-              <span class="about__stat-label">Years of creative work</span>
-            </li>
-          </ul>
+          <div class="about__side">
+            <div class="about__values reveal">
+              <div class="about__values-head">
+                <h3 class="about__values-title">Our Values</h3>
+                <div class="values__controls">
+                  <button class="values__arrow" type="button" aria-label="Previous value" data-values-prev>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" /></svg>
+                  </button>
+                  <button class="values__arrow" type="button" aria-label="Next value" data-values-next>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+                  </button>
+                </div>
+              </div>
 
-          <!-- Pull quote, as on the live homepage: quote set as text, with
-               the same James Baldwin signature (from the live site, recoloured
-               to ink on transparent, WebP + PNG) -->
-          <figure class="about__quote reveal">
-            <blockquote class="about__quote-text">
-              <p>“Artists are here to disturb the peace.”</p>
-            </blockquote>
-            <figcaption class="about__quote-cite">
-              <picture>
-                <source srcset="images/about/james-baldwin-signature.webp" type="image/webp">
-                <img src="images/about/james-baldwin-signature.png" alt="James Baldwin" width="252" height="45" loading="lazy" decoding="async">
-              </picture>
-            </figcaption>
-          </figure>
-        </div>
-
-        <div class="about__side">
-          <div class="about__values reveal">
-            <div class="about__values-head">
-              <h3 class="about__values-title">Our Values</h3>
-              <div class="values__controls">
-                <button class="values__arrow" type="button" aria-label="Previous value" data-values-prev>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" /></svg>
-                </button>
-                <button class="values__arrow" type="button" aria-label="Next value" data-values-next>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-                </button>
+              <!-- Swipeable row of value cards (scroll snap). The arrows step one
+                   card; it also advances by itself every 5s, pausing on hover,
+                   focus and touch (script.js). No auto-advance for reduced motion. -->
+              <div class="values" data-values>
+                <ul class="values__track">
+                  <li class="value-card">
+                    <span class="value-card__number eyebrow" aria-hidden="true">01</span>
+                    <span class="value-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7.5" r="3" /><path d="M6.5 20v-1a5.5 5.5 0 0 1 11 0v1" /><circle cx="5" cy="10" r="2.2" /><path d="M1.5 19a3.8 3.8 0 0 1 3.5-4" /><circle cx="19" cy="10" r="2.2" /><path d="M22.5 19a3.8 3.8 0 0 0-3.5-4" /></svg></span>
+                    <h4 class="value-card__title">Community-Based</h4>
+                    <p class="value-card__text">Rooted close to home. Our work starts in, and answers to, the underrepresented communities we serve.</p>
+                  </li>
+                  <li class="value-card">
+                    <span class="value-card__number eyebrow" aria-hidden="true">02</span>
+                    <span class="value-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19 7-7 3 3-7 7Z" /><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18Z" /><path d="m2 2 7.6 7.6" /><circle cx="11" cy="11" r="2" /></svg></span>
+                    <h4 class="value-card__title">Artist-Centered</h4>
+                    <p class="value-card__text">Talent is not enough. We give creatives the tools, strategy and infrastructure to monetize their art form.</p>
+                  </li>
+                  <li class="value-card">
+                    <span class="value-card__number eyebrow" aria-hidden="true">03</span>
+                    <span class="value-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12a8.5 8.5 0 0 1-14.6 5.9" /><path d="M3.5 12A8.5 8.5 0 0 1 18.1 6.1" /><path d="M18.5 2.5v3.8h-3.8" /><path d="M5.5 21.5v-3.8h3.8" /><path d="M12 8.5v7" /><path d="M14 9.75h-2.75a1.25 1.25 0 0 0 0 2.5h1.5a1.25 1.25 0 0 1 0 2.5H10" /></svg></span>
+                    <h4 class="value-card__title">Reinvested Locally</h4>
+                    <p class="value-card__text">As creatives generate revenue, those skills and resources flow back into the communities they come from.</p>
+                  </li>
+                </ul>
               </div>
             </div>
 
-            <!-- Swipeable row of value cards (scroll snap). The arrows step one
-                 card; it also advances by itself every 5s, pausing on hover,
-                 focus and touch (script.js). No auto-advance for reduced motion. -->
-            <div class="values" data-values>
-              <ul class="values__track">
-                <li class="value-card">
-                  <span class="value-card__number eyebrow" aria-hidden="true">01</span>
-                  <span class="value-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7.5" r="3" /><path d="M6.5 20v-1a5.5 5.5 0 0 1 11 0v1" /><circle cx="5" cy="10" r="2.2" /><path d="M1.5 19a3.8 3.8 0 0 1 3.5-4" /><circle cx="19" cy="10" r="2.2" /><path d="M22.5 19a3.8 3.8 0 0 0-3.5-4" /></svg></span>
-                  <h4 class="value-card__title">Community-Based</h4>
-                  <p class="value-card__text">Rooted close to home. Our work starts in, and answers to, the underrepresented communities we serve.</p>
-                </li>
-                <li class="value-card">
-                  <span class="value-card__number eyebrow" aria-hidden="true">02</span>
-                  <span class="value-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19 7-7 3 3-7 7Z" /><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18Z" /><path d="m2 2 7.6 7.6" /><circle cx="11" cy="11" r="2" /></svg></span>
-                  <h4 class="value-card__title">Artist-Centered</h4>
-                  <p class="value-card__text">Talent is not enough. We give creatives the tools, strategy and infrastructure to monetize their art form.</p>
-                </li>
-                <li class="value-card">
-                  <span class="value-card__number eyebrow" aria-hidden="true">03</span>
-                  <span class="value-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12a8.5 8.5 0 0 1-14.6 5.9" /><path d="M3.5 12A8.5 8.5 0 0 1 18.1 6.1" /><path d="M18.5 2.5v3.8h-3.8" /><path d="M5.5 21.5v-3.8h3.8" /><path d="M12 8.5v7" /><path d="M14 9.75h-2.75a1.25 1.25 0 0 0 0 2.5h1.5a1.25 1.25 0 0 1 0 2.5H10" /></svg></span>
-                  <h4 class="value-card__title">Reinvested Locally</h4>
-                  <p class="value-card__text">As creatives generate revenue, those skills and resources flow back into the communities they come from.</p>
-                </li>
-              </ul>
-            </div>
-          </div>
+            <!-- "Where it all began": a loop from the Say Their Names Memorial
+                 film (0:15–0:37, silent, 960x540, ~1.1 MB). The poster shows
+                 until the video plays and is all that loads for reduced motion
+                 or Save-Data (script.js). Full download in /source-video.
+                 The badge's ring text spins slowly; the V mark stays still. -->
+            <figure class="about__photo reveal">
+              <div class="about__media">
+                <picture>
+                  <source srcset="images/about/say-their-names-poster.webp" type="image/webp">
+                  <img class="about__poster" src="images/about/say-their-names-poster.jpg" alt="A person in a mask hangs a flower on a fence lined with portraits at the Say Their Names Memorial in Salt Lake City" width="960" height="540" loading="lazy" decoding="async">
+                </picture>
+                <video class="about__video" muted loop playsinline preload="none" aria-hidden="true" data-memorial-video>
+                  <source src="assets/video/say-their-names-loop.mp4" type="video/mp4">
+                </video>
+                <button class="about__video-toggle" type="button" aria-label="Pause memorial video" data-memorial-video-toggle data-video-label="memorial video" hidden>
+                  <svg class="about__icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" /></svg>
+                  <svg class="about__icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+                </button>
+              </div>
 
-          <!-- Frame from the UNITY Block Party film. 1200x750 desktop,
-               720x450 (-m) phones. The badge's ring text spins slowly; the V
-               mark in the middle stays still.
-               TODO: swap for a short looping clip once the right video is
-               picked from their site (same markup as the hero's <video>). -->
-          <div class="about__photo reveal">
-            <picture>
-              <source media="(max-width: 767px)" srcset="images/about/about-block-party-m.webp" type="image/webp" width="720" height="450">
-              <source media="(max-width: 767px)" srcset="images/about/about-block-party-m.jpg" type="image/jpeg" width="720" height="450">
-              <source srcset="images/about/about-block-party.webp" type="image/webp">
-              <img src="images/about/about-block-party.jpg" alt="A crowd with their hands in the air, dancing in the street at the UNITY Block Party" width="1200" height="750" loading="lazy" decoding="async">
-            </picture>
+              <figcaption class="about__caption">
+                <span class="eyebrow">Where it all began</span>
+                <a class="about__caption-link" href="https://www.youtube.com/watch?v=wHnj8JZEkIE" target="_blank" rel="noopener">
+                  Say Their Names Memorial, SLC
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg>
+                  <span class="visually-hidden">(watch the film on YouTube, opens in a new tab)</span>
+                </a>
+              </figcaption>
 
             <div class="about__badge" aria-hidden="true">
               <svg class="about__badge-ring" viewBox="0 0 160 160">
@@ -464,263 +487,264 @@
                 <path fill-rule="evenodd" d="M414 0h138v139H414zM0 139h966L483 829zM414 139v275h138V139z" />
               </svg>
             </div>
+            </figure>
           </div>
+
         </div>
 
-      </div>
-
-      <!-- Past events: cards drift right to left inside a soft tray, fading out
-           at both sides. The list is repeated once (aria-hidden) so the loop is
-           seamless. Photos are decorative (alt=""): each card's title says which
-           event it is. Pauses on hover; stands still and scrolls sideways for
-           reduced motion. Images: from the live events page, cropped 5:4 to
-           640x512 (2x display), WebP + JPG. -->
-      <div class="container about__events">
-        <div class="events-reel">
-          <div class="events-reel__viewport">
-            <div class="events-reel__track">
-              <ul class="events-reel__list">
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/unity-block-party-23.webp" type="image/webp">
-                    <img src="images/events/unity-block-party-23.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">UNITY Block Party ’23</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/afro-paradigm-blur-the-lines.webp" type="image/webp">
-                    <img src="images/events/afro-paradigm-blur-the-lines.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">Afro Paradigm: Blur the Lines</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/afro-paradigm-the-interlude.webp" type="image/webp">
-                    <img src="images/events/afro-paradigm-the-interlude.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">Afro Paradigm: The Interlude</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/celebrating-black-joy.webp" type="image/webp">
-                    <img src="images/events/celebrating-black-joy.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">Celebrating Black Joy</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/another-black-block-party.webp" type="image/webp">
-                    <img src="images/events/another-black-block-party.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">Another Black Block Party</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/versatile-image-soft-launch.webp" type="image/webp">
-                    <img src="images/events/versatile-image-soft-launch.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">Versatile Image Soft Launch</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/say-their-names-memorial-slc.webp" type="image/webp">
-                    <img src="images/events/say-their-names-memorial-slc.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">Say Their Names Memorial, SLC</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/bb-premiere.webp" type="image/webp">
-                    <img src="images/events/bb-premiere.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">BB Premiere</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/bb-after-dark.webp" type="image/webp">
-                    <img src="images/events/bb-after-dark.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">BB After Dark</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/bb-unlimited-memphis.webp" type="image/webp">
-                    <img src="images/events/bb-unlimited-memphis.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">BB Unlimited, Memphis</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/rollinfout-interview-nyc.webp" type="image/webp">
-                    <img src="images/events/rollinfout-interview-nyc.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">RollinFout.com Interview, NYC</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/bb-jam-session-atl.webp" type="image/webp">
-                    <img src="images/events/bb-jam-session-atl.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">BB Jam Session, ATL</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/infocus-interview-denver.webp" type="image/webp">
-                    <img src="images/events/infocus-interview-denver.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">InFocus Interview, Denver, CO</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/bb-cocktails-conversation-denver.webp" type="image/webp">
-                    <img src="images/events/bb-cocktails-conversation-denver.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">BB Cocktails + Conversation, Denver, CO</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/bb-block-party-brooklyn.webp" type="image/webp">
-                    <img src="images/events/bb-block-party-brooklyn.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">BB Block Party, Brooklyn, NY</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/bb-hang-out.webp" type="image/webp">
-                    <img src="images/events/bb-hang-out.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">BB Hang Out</p>
-                </li>
-              </ul>
-              <ul class="events-reel__list" aria-hidden="true">
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/unity-block-party-23.webp" type="image/webp">
-                    <img src="images/events/unity-block-party-23.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">UNITY Block Party ’23</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/afro-paradigm-blur-the-lines.webp" type="image/webp">
-                    <img src="images/events/afro-paradigm-blur-the-lines.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">Afro Paradigm: Blur the Lines</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/afro-paradigm-the-interlude.webp" type="image/webp">
-                    <img src="images/events/afro-paradigm-the-interlude.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">Afro Paradigm: The Interlude</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/celebrating-black-joy.webp" type="image/webp">
-                    <img src="images/events/celebrating-black-joy.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">Celebrating Black Joy</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/another-black-block-party.webp" type="image/webp">
-                    <img src="images/events/another-black-block-party.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">Another Black Block Party</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/versatile-image-soft-launch.webp" type="image/webp">
-                    <img src="images/events/versatile-image-soft-launch.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">Versatile Image Soft Launch</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/say-their-names-memorial-slc.webp" type="image/webp">
-                    <img src="images/events/say-their-names-memorial-slc.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">Say Their Names Memorial, SLC</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/bb-premiere.webp" type="image/webp">
-                    <img src="images/events/bb-premiere.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">BB Premiere</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/bb-after-dark.webp" type="image/webp">
-                    <img src="images/events/bb-after-dark.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">BB After Dark</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/bb-unlimited-memphis.webp" type="image/webp">
-                    <img src="images/events/bb-unlimited-memphis.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">BB Unlimited, Memphis</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/rollinfout-interview-nyc.webp" type="image/webp">
-                    <img src="images/events/rollinfout-interview-nyc.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">RollinFout.com Interview, NYC</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/bb-jam-session-atl.webp" type="image/webp">
-                    <img src="images/events/bb-jam-session-atl.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">BB Jam Session, ATL</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/infocus-interview-denver.webp" type="image/webp">
-                    <img src="images/events/infocus-interview-denver.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">InFocus Interview, Denver, CO</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/bb-cocktails-conversation-denver.webp" type="image/webp">
-                    <img src="images/events/bb-cocktails-conversation-denver.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">BB Cocktails + Conversation, Denver, CO</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/bb-block-party-brooklyn.webp" type="image/webp">
-                    <img src="images/events/bb-block-party-brooklyn.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">BB Block Party, Brooklyn, NY</p>
-                </li>
-                <li class="event-card">
-                  <picture>
-                    <source srcset="images/events/bb-hang-out.webp" type="image/webp">
-                    <img src="images/events/bb-hang-out.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
-                  </picture>
-                  <p class="event-card__title">BB Hang Out</p>
-                </li>
-              </ul>
+        <!-- Past events: cards drift right to left inside a soft tray, fading out
+             at both sides. The list is repeated once (aria-hidden) so the loop is
+             seamless. Photos are decorative (alt=""): each card's title says which
+             event it is. Pauses on hover; stands still and scrolls sideways for
+             reduced motion. Images: from the live events page, cropped 5:4 to
+             640x512 (2x display), WebP + JPG. -->
+        <div class="container about__events">
+          <div class="events-reel">
+            <div class="events-reel__viewport">
+              <div class="events-reel__track">
+                <ul class="events-reel__list">
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/unity-block-party-23.webp" type="image/webp">
+                      <img src="images/events/unity-block-party-23.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">UNITY Block Party ’23</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/afro-paradigm-blur-the-lines.webp" type="image/webp">
+                      <img src="images/events/afro-paradigm-blur-the-lines.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">Afro Paradigm: Blur the Lines</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/afro-paradigm-the-interlude.webp" type="image/webp">
+                      <img src="images/events/afro-paradigm-the-interlude.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">Afro Paradigm: The Interlude</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/celebrating-black-joy.webp" type="image/webp">
+                      <img src="images/events/celebrating-black-joy.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">Celebrating Black Joy</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/another-black-block-party.webp" type="image/webp">
+                      <img src="images/events/another-black-block-party.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">Another Black Block Party</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/versatile-image-soft-launch.webp" type="image/webp">
+                      <img src="images/events/versatile-image-soft-launch.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">Versatile Image Soft Launch</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/say-their-names-memorial-slc.webp" type="image/webp">
+                      <img src="images/events/say-their-names-memorial-slc.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">Say Their Names Memorial, SLC</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/bb-premiere.webp" type="image/webp">
+                      <img src="images/events/bb-premiere.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">BB Premiere</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/bb-after-dark.webp" type="image/webp">
+                      <img src="images/events/bb-after-dark.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">BB After Dark</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/bb-unlimited-memphis.webp" type="image/webp">
+                      <img src="images/events/bb-unlimited-memphis.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">BB Unlimited, Memphis</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/rollinfout-interview-nyc.webp" type="image/webp">
+                      <img src="images/events/rollinfout-interview-nyc.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">RollinFout.com Interview, NYC</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/bb-jam-session-atl.webp" type="image/webp">
+                      <img src="images/events/bb-jam-session-atl.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">BB Jam Session, ATL</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/infocus-interview-denver.webp" type="image/webp">
+                      <img src="images/events/infocus-interview-denver.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">InFocus Interview, Denver, CO</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/bb-cocktails-conversation-denver.webp" type="image/webp">
+                      <img src="images/events/bb-cocktails-conversation-denver.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">BB Cocktails + Conversation, Denver, CO</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/bb-block-party-brooklyn.webp" type="image/webp">
+                      <img src="images/events/bb-block-party-brooklyn.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">BB Block Party, Brooklyn, NY</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/bb-hang-out.webp" type="image/webp">
+                      <img src="images/events/bb-hang-out.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">BB Hang Out</p>
+                  </li>
+                </ul>
+                <ul class="events-reel__list" aria-hidden="true">
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/unity-block-party-23.webp" type="image/webp">
+                      <img src="images/events/unity-block-party-23.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">UNITY Block Party ’23</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/afro-paradigm-blur-the-lines.webp" type="image/webp">
+                      <img src="images/events/afro-paradigm-blur-the-lines.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">Afro Paradigm: Blur the Lines</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/afro-paradigm-the-interlude.webp" type="image/webp">
+                      <img src="images/events/afro-paradigm-the-interlude.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">Afro Paradigm: The Interlude</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/celebrating-black-joy.webp" type="image/webp">
+                      <img src="images/events/celebrating-black-joy.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">Celebrating Black Joy</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/another-black-block-party.webp" type="image/webp">
+                      <img src="images/events/another-black-block-party.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">Another Black Block Party</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/versatile-image-soft-launch.webp" type="image/webp">
+                      <img src="images/events/versatile-image-soft-launch.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">Versatile Image Soft Launch</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/say-their-names-memorial-slc.webp" type="image/webp">
+                      <img src="images/events/say-their-names-memorial-slc.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">Say Their Names Memorial, SLC</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/bb-premiere.webp" type="image/webp">
+                      <img src="images/events/bb-premiere.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">BB Premiere</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/bb-after-dark.webp" type="image/webp">
+                      <img src="images/events/bb-after-dark.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">BB After Dark</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/bb-unlimited-memphis.webp" type="image/webp">
+                      <img src="images/events/bb-unlimited-memphis.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">BB Unlimited, Memphis</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/rollinfout-interview-nyc.webp" type="image/webp">
+                      <img src="images/events/rollinfout-interview-nyc.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">RollinFout.com Interview, NYC</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/bb-jam-session-atl.webp" type="image/webp">
+                      <img src="images/events/bb-jam-session-atl.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">BB Jam Session, ATL</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/infocus-interview-denver.webp" type="image/webp">
+                      <img src="images/events/infocus-interview-denver.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">InFocus Interview, Denver, CO</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/bb-cocktails-conversation-denver.webp" type="image/webp">
+                      <img src="images/events/bb-cocktails-conversation-denver.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">BB Cocktails + Conversation, Denver, CO</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/bb-block-party-brooklyn.webp" type="image/webp">
+                      <img src="images/events/bb-block-party-brooklyn.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">BB Block Party, Brooklyn, NY</p>
+                  </li>
+                  <li class="event-card">
+                    <picture>
+                      <source srcset="images/events/bb-hang-out.webp" type="image/webp">
+                      <img src="images/events/bb-hang-out.jpg" alt="" width="320" height="256" loading="lazy" decoding="async">
+                    </picture>
+                    <p class="event-card__title">BB Hang Out</p>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="about__events-copy reveal">
-          <h3 class="about__events-title">A decade of showing up</h3>
-          <p class="about__events-text">
-            Block parties, premieres, memorials and late-night conversations — from Salt Lake City to
-            Memphis, Atlanta, Denver and Brooklyn.
-          </p>
-          <a class="btn btn--dark" href="html/events.html">
-            See All Events
-            <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-          </a>
+          <div class="about__events-copy reveal">
+            <h3 class="about__events-title">A decade of showing up</h3>
+            <p class="about__events-text">
+              Block parties, premieres, memorials and late-night conversations — from Salt Lake City to
+              Memphis, Atlanta, Denver and Brooklyn.
+            </p>
+            <a class="btn btn--dark" href="html/events.html">
+              See All Events
+              <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+            </a>
+          </div>
         </div>
       </div>
     </section>

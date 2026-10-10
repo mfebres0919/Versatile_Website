@@ -59,6 +59,7 @@
   --gutter: 1.25rem;
   --header-height: 4.5rem;
   --radius: 0.25rem;
+  --divider-height: clamp(2.5rem, 7vw, 6rem);
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --transition: 0.3s ease;
 }
@@ -228,6 +229,34 @@ button {
 .has-reveal .reveal--delay-1 { transition-delay: 0.12s; }
 .has-reveal .reveal--delay-2 { transition-delay: 0.24s; }
 .has-reveal .reveal--delay-3 { transition-delay: 0.36s; }
+
+
+/* ==========================================================================
+   SECTION DIVIDERS (every page)
+   An SVG shape painted in a neighbouring section's colour (--divider-color)
+   so that colour appears to flow into this one. The SVG is used as a mask,
+   so its lighter layers come through as softer bands of the same colour.
+   Place it as the first child of a position: relative block, which should
+   leave var(--divider-height) of room at its top.
+   --envelope: hangs down from the top edge (images/svg-dividers).
+   ========================================================================== */
+
+.section-divider {
+  position: absolute;
+  top: -1px; /* hides a hairline seam on some screens */
+  left: 0;
+  right: 0;
+  z-index: 1;
+  height: var(--divider-height);
+  background-color: var(--divider-color, var(--color-ink));
+  pointer-events: none;
+  -webkit-mask: var(--divider-shape) center / 100% 100% no-repeat;
+  mask: var(--divider-shape) center / 100% 100% no-repeat;
+}
+
+.section-divider--envelope {
+  --divider-shape: url('../images/svg-dividers/intersecting-envelope.svg');
+}
 
 
 /* ==========================================================================

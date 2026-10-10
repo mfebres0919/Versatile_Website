@@ -1,46 +1,44 @@
 /* ==========================================================================
-   HOMEPAGE — hero background video
-   The video has no autoplay attribute: this starts it, so it never runs for
-   visitors who asked for reduced motion or less data (Save-Data). They keep
-   the poster photo instead. Once frames are actually playing the video
-   fades in over the poster (.is-playing). It pauses while the hero is off
-   screen, and the round button lets anyone pause it for good.
+   HOMEPAGE — looping background videos (hero + Say Their Names memorial)
+   The videos have no autoplay attribute: this starts them, so they never
+   run for visitors who asked for reduced motion or less data (Save-Data).
+   They keep the poster photo instead. Once frames are actually playing, a
+   video fades in over its poster (.is-playing). Each pauses while off
+   screen, and its round button lets anyone pause it for good.
    ========================================================================== */
-
-const heroVideo = document.querySelector('[data-hero-video]');
-const heroVideoToggle = document.querySelector('[data-hero-video-toggle]');
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const saveData = navigator.connection?.saveData === true;
 
-if (heroVideo && !reduceMotion && !saveData) {
-  let pausedByVisitor = false;
+function setupLoopVideo(video, toggle) {
+  if (!video || reduceMotion || saveData) return;
 
-  heroVideo.addEventListener('playing', () => heroVideo.classList.add('is-playing'), { once: true });
+  let pausedByVisitor = false;
+  const label = toggle.dataset.videoLabel || 'background video';
+
+  video.addEventListener('playing', () => video.classList.add('is-playing'), { once: true });
 
   // Browsers can refuse to play (e.g. low-power mode); the poster just stays
-  const playHero = () => heroVideo.play().catch(() => {});
+  const play = () => video.play().catch(() => {});
 
-  function setToggle(paused) {
-    heroVideoToggle.classList.toggle('is-paused', paused);
-    heroVideoToggle.setAttribute('aria-label', paused ? 'Play background video' : 'Pause background video');
-  }
-
-  heroVideoToggle.hidden = false;
-  heroVideoToggle.addEventListener('click', () => {
-    pausedByVisitor = !heroVideo.paused;
-    if (pausedByVisitor) heroVideo.pause();
-    else playHero();
-    setToggle(pausedByVisitor);
+  toggle.hidden = false;
+  toggle.addEventListener('click', () => {
+    pausedByVisitor = !video.paused;
+    if (pausedByVisitor) video.pause();
+    else play();
+    toggle.classList.toggle('is-paused', pausedByVisitor);
+    toggle.setAttribute('aria-label', `${pausedByVisitor ? 'Play' : 'Pause'} ${label}`);
   });
 
   // Only spend battery and bandwidth on it while it's on screen
   new IntersectionObserver(([entry]) => {
-    if (entry.isIntersecting && !pausedByVisitor) playHero();
-    else heroVideo.pause();
-  }).observe(heroVideo);
+    if (entry.isIntersecting && !pausedByVisitor) play();
+    else video.pause();
+  }).observe(video);
 }
 
+setupLoopVideo(document.querySelector('[data-hero-video]'), document.querySelector('[data-hero-video-toggle]'));
+setupLoopVideo(document.querySelector('[data-memorial-video]'), document.querySelector('[data-memorial-video-toggle]'));
 
 /* ==========================================================================
    HOMEPAGE — about intro ("Hey neighbor. Allow us to re-introduce ourselves.")
