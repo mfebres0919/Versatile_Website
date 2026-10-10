@@ -103,3 +103,105 @@ if (intro && !reduceMotion) {
   window.addEventListener('scroll', requestIntroUpdate, { passive: true });
   window.addEventListener('resize', requestIntroUpdate);
 }
+
+
+/* ==========================================================================
+   HOMEPAGE — about stats count up (300+, 3, 10+)
+   The final values are in the HTML; this resets them to 0 and counts up
+   once, the first time the row is mostly on screen. Reduced motion: the
+   numbers simply stay as written.
+   ========================================================================== */
+
+const countGroup = document.querySelector('[data-count-group]');
+
+if (countGroup && !reduceMotion) {
+  const counters = countGroup.querySelectorAll('[data-count-to]');
+  const COUNT_DURATION = 1600; // ms
+
+  const showCount = (counter, value) => {
+    counter.textContent = value + (counter.dataset.countSuffix || '');
+  };
+
+  counters.forEach((counter) => showCount(counter, 0));
+
+  new IntersectionObserver(([entry], observer) => {
+    if (!entry.isIntersecting) return;
+    observer.disconnect();
+
+    const start = performance.now();
+    const tick = (now) => {
+      const t = Math.min((now - start) / COUNT_DURATION, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      counters.forEach((counter) => showCount(counter, Math.round(Number(counter.dataset.countTo) * eased)));
+      if (t < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }, { threshold: 0.6 }).observe(countGroup);
+}
+
+
+/* ==========================================================================
+   HOMEPAGE — values carousel
+   The row is a native scroller with snap points (styles.css), so swipes
+   follow the finger and settle on a card. Arrows step one card; after the
+   last card they wrap round. Every 5s it advances by itself, pausing on
+   hover, keyboard focus and touch, and while the tab is hidden. No
+   auto-advance for reduced motion (the arrows and swiping still work).
+   ========================================================================== */
+
+const values = document.querySelector('[data-values]');
+
+if (values) {
+  const valuesTrack = values.querySelector('.values__track');
+  const valueCards = valuesTrack.querySelectorAll('.value-card');
+  const VALUES_DURATION = 5000;
+  let valuesTimer = null;
+
+  // Card nearest the left edge of the row
+  function currentValue() {
+    const start = valueCards[0].offsetLeft;
+    let nearest = 0;
+    valueCards.forEach((card, i) => {
+      if (Math.abs(card.offsetLeft - start - valuesTrack.scrollLeft) <
+          Math.abs(valueCards[nearest].offsetLeft - start - valuesTrack.scrollLeft)) nearest = i;
+    });
+    return nearest;
+  }
+
+  function goToValue(next) {
+    const atEnd = valuesTrack.scrollLeft + valuesTrack.clientWidth >= valuesTrack.scrollWidth - 4;
+    if (next >= valueCards.length || (next > currentValue() && atEnd)) next = 0;
+    if (next < 0) next = valueCards.length - 1;
+    valuesTrack.scrollTo({ left: valueCards[next].offsetLeft - valueCards[0].offsetLeft });
+  }
+
+  function stopValues() {
+    clearInterval(valuesTimer);
+    valuesTimer = null;
+  }
+
+  function startValues() {
+    if (reduceMotion) return;
+    stopValues();
+    valuesTimer = setInterval(() => goToValue(currentValue() + 1), VALUES_DURATION);
+  }
+
+  const valuesBox = values.closest('.about__values');
+  valuesBox.querySelector('[data-values-prev]').addEventListener('click', () => { goToValue(currentValue() - 1); startValues(); });
+  valuesBox.querySelector('[data-values-next]').addEventListener('click', () => { goToValue(currentValue() + 1); startValues(); });
+
+  valuesBox.addEventListener('mouseenter', stopValues);
+  valuesBox.addEventListener('mouseleave', startValues);
+  valuesBox.addEventListener('focusin', stopValues);
+  valuesBox.addEventListener('focusout', (event) => {
+    if (!valuesBox.contains(event.relatedTarget)) startValues();
+  });
+  valuesTrack.addEventListener('touchstart', stopValues, { passive: true });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stopValues();
+    else startValues();
+  });
+
+  startValues();
+}

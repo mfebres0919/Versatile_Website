@@ -207,6 +207,30 @@ button {
 
 
 /* ==========================================================================
+   SCROLL REVEAL (every page)
+   Add .reveal to a block and it fades up the first time it scrolls into
+   view. global.js puts .has-reveal on <html> (only when motion is allowed)
+   and .is-visible on each block, so without JavaScript or with reduced
+   motion everything is simply there. Delay classes stagger siblings.
+   ========================================================================== */
+
+.has-reveal .reveal {
+  opacity: 0;
+  transform: translateY(1.75rem);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+}
+
+.has-reveal .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.has-reveal .reveal--delay-1 { transition-delay: 0.12s; }
+.has-reveal .reveal--delay-2 { transition-delay: 0.24s; }
+.has-reveal .reveal--delay-3 { transition-delay: 0.36s; }
+
+
+/* ==========================================================================
    BUTTONS
    Square-cornered, uppercase. On hover/focus a second colour sweeps in from
    the left (::before scales from 0 to full width), per the MigsFlow

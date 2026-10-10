@@ -528,8 +528,11 @@
    The values sit in a soft grey tray, one white card per value.
    ========================================================================== */
 
+/* minmax(0, 1fr): without it the values row (wider than the screen by
+   design) would stretch the column and push the page sideways */
 .about__body {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 4rem;
   padding-block: 3rem 4rem;
 }
@@ -567,6 +570,26 @@
   line-height: 1.12;
 }
 
+/* Orange underline under the key words. Drawn with a background so it
+   follows the words if they wrap. Full width by default; with .has-reveal
+   it starts at 0 and draws in once the statement is visible. */
+.about__mark {
+  background: linear-gradient(var(--color-orange), var(--color-orange)) left bottom / 100% 0.1em no-repeat;
+}
+
+.has-reveal .about__mark {
+  background-size: 0% 0.1em;
+  transition: background-size 1s var(--ease-out) 0.45s;
+}
+
+.has-reveal .about__mark + .about__mark {
+  transition-delay: 0.8s;
+}
+
+.has-reveal .is-visible .about__mark {
+  background-size: 100% 0.1em;
+}
+
 .about__text {
   display: grid;
   gap: 1rem;
@@ -596,6 +619,7 @@
 
 .about__stat-number {
   font-family: var(--font-heading);
+  font-variant-numeric: tabular-nums; /* digits keep their width while counting */
   font-stretch: 125%;
   font-size: clamp(1.75rem, 4vw, 2.75rem);
   font-weight: 600;
@@ -611,29 +635,189 @@
   color: var(--color-muted);
 }
 
-/* ---------- Values ---------- */
+/* ---------- Photo + badge ---------- */
+
+.about__photo {
+  position: relative;
+  margin-top: 4.5rem;
+}
+
+.about__photo picture,
+.about__photo img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+.about__photo picture {
+  overflow: hidden;
+  /* Shows while the photo is still loading */
+  background-color: var(--color-paper);
+}
+
+/* Round ink badge hanging off the photo's top edge, ringed in white so it
+   looks cut out of the photo */
+.about__badge {
+  position: absolute;
+  top: -2.75rem;
+  right: 1.25rem;
+  width: 6.5rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: var(--color-ink);
+  box-shadow: 0 0 0 0.375rem var(--color-white);
+}
+
+.about__badge-ring {
+  width: 100%;
+  height: 100%;
+  fill: var(--color-white);
+  font-family: var(--font-heading);
+  font-stretch: 125%;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.about__badge-mark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30%;
+  fill: var(--color-orange);
+  transform: translate(-50%, -45%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .about__badge-ring {
+    animation: badge-spin 24s linear infinite;
+  }
+}
+
+@keyframes badge-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (min-width: 1024px) {
+  .about__badge {
+    top: -3.5rem;
+    right: 2rem;
+    width: 8rem;
+  }
+}
+
+/* ---------- Pull quote (text, under the stats) ---------- */
+
+.about__quote {
+  margin: 3rem 0 0;
+  padding: 2rem 0 0 1.5rem;
+  border-left: 3px solid var(--color-orange);
+}
+
+.about__quote-text {
+  margin: 0;
+}
+
+.about__quote-text p {
+  font-family: var(--font-heading);
+  font-stretch: 125%;
+  font-size: clamp(1.375rem, 2.6vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.about__quote-cite {
+  margin-top: 1.25rem;
+}
+
+.about__quote-cite img {
+  width: clamp(9rem, 16vw, 12.5rem);
+  height: auto;
+}
+
+/* ---------- Values carousel ---------- */
+
+.about__values-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
 
 .about__values-title {
   font-size: clamp(1.5rem, 3vw, 2.25rem);
 }
 
-.values {
-  display: grid;
+.values__controls {
+  display: flex;
   gap: 0.5rem;
+}
+
+.values__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 1px solid var(--color-line);
+  border-radius: 50%;
+  background: none;
+  color: var(--color-ink);
+  cursor: pointer;
+  transition: background-color var(--transition), color var(--transition), border-color var(--transition);
+}
+
+.values__arrow:hover {
+  border-color: var(--color-ink);
+  background-color: var(--color-ink);
+  color: var(--color-white);
+}
+
+.values__arrow svg {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+/* Soft tray; inside it a native horizontal scroller that snaps to a card.
+   Each card is a little narrower than the tray so the next one peeks in. */
+.values {
   margin-top: 1.5rem;
   padding: 0.5rem;
   border-radius: 1rem;
   background-color: var(--color-paper);
 }
 
-/* Phones: icon tile, then title and text stacked. 640px+: icon on the
-   left with title and text beside it. Number top right throughout. */
+.values__track {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  border-radius: 0.75rem;
+}
+
+.values__track::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .values__track {
+    scroll-behavior: auto;
+  }
+}
+
 .value-card {
   position: relative;
-  display: grid;
-  align-items: start;
+  flex: 0 0 86%;
+  display: flex;
+  flex-direction: column;
   padding: 1.75rem 1.5rem;
-  overflow: hidden;
+  scroll-snap-align: start;
   border-radius: 0.75rem;
   background-color: var(--color-white);
 }
@@ -659,24 +843,6 @@
   background-color: var(--color-orange);
 }
 
-/* Orange bar draws in along the left edge on hover */
-.value-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 3px;
-  background-color: var(--color-orange);
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform 0.45s var(--ease-out);
-}
-
-.value-card:hover::before {
-  transform: scaleY(1);
-}
-
 .value-card__number {
   position: absolute;
   top: 1.25rem;
@@ -685,37 +851,19 @@
 }
 
 .value-card__title {
-  margin-top: 1.25rem;
+  margin-top: 1.5rem;
   font-size: 1.125rem;
 }
 
 .value-card__text {
-  margin-top: 0.5rem;
+  margin-top: 0.625rem;
   line-height: 1.7;
   color: var(--color-muted);
 }
 
-@media (min-width: 640px) {
-  .value-card {
-    grid-template-columns: auto minmax(0, 1fr);
-    column-gap: 1.25rem;
-  }
-
-  .value-card__icon {
-    grid-row: span 2;
-  }
-
-  .value-card__title {
-    display: flex;
-    align-items: center;
-    min-height: 3.25rem; /* lines up with the icon tile */
-    margin-top: 0;
-    padding-right: 2rem; /* clear of the number */
-  }
-}
-
 @media (min-width: 768px) {
   .value-card {
+    flex-basis: 78%;
     padding: 2rem;
   }
 }

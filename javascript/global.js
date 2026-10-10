@@ -41,3 +41,22 @@ document.addEventListener('keydown', (event) => {
 window.matchMedia('(min-width: 1024px)').addEventListener('change', (event) => {
   if (event.matches) setMenu(false);
 });
+
+/* Scroll reveal: .reveal blocks fade up the first time they scroll into
+   view (styles in global.css). Skipped entirely for reduced motion, so
+   those visitors never see hidden content. */
+const revealBlocks = document.querySelectorAll('.reveal');
+
+if (revealBlocks.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.documentElement.classList.add('has-reveal');
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      revealObserver.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -12% 0px' });
+
+  revealBlocks.forEach((block) => revealObserver.observe(block));
+}
