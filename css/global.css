@@ -415,7 +415,8 @@ button {
    Transparent over the hero; .is-scrolled (global.js) turns it black,
    with a faint rule underneath so it doesn't sit like a slab on white
    sections. The logo and links stay white throughout.
-   Mobile: links live in a full-width panel toggled by .nav-toggle.
+   Mobile (under 1024px): links live in a drawer from the right, toggled
+   by .nav-toggle.
    ========================================================================== */
 
 .header {
@@ -465,30 +466,80 @@ button {
   text-transform: uppercase;
 }
 
-/* Mobile panel */
+/* Mobile drawer: slides in from the right under the header and covers
+   about three quarters of the screen; the strip left uncovered dims
+   (.header::before, which also closes the menu when tapped, global.js).
+   The links then drop in one after another, top to bottom, like
+   falling dominoes: each tips down from its top edge, staggered by --i. */
 .nav {
-  position: absolute;
-  top: 100%;
-  left: 0;
+  position: fixed;
+  top: var(--header-height);
   right: 0;
+  bottom: 0;
   display: flex;
   flex-direction: column;
-  gap: 1.75rem;
-  padding: 0.5rem var(--gutter) 2rem;
+  gap: 2rem;
+  width: min(75vw, 24rem);
+  padding: 1rem var(--gutter) 2.5rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   background-color: var(--color-ink);
   color: var(--color-white);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 24px 40px rgba(18, 15, 16, 0.3);
-  opacity: 0;
+  box-shadow: -24px 0 40px rgba(0, 0, 0, 0.35);
   visibility: hidden;
-  transform: translateY(-0.5rem);
-  transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
+  transform: translateX(100%);
+  transition: transform 0.5s var(--ease-out), visibility 0.5s;
 }
 
 .header.is-open .nav {
+  visibility: visible;
+  transform: none;
+}
+
+.header::before {
+  content: '';
+  position: fixed;
+  inset: var(--header-height) 0 0;
+  background-color: rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s;
+}
+
+.header.is-open::before {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
+}
+
+/* Page behind stays put while the drawer is open */
+.menu-open {
+  overflow: hidden;
+}
+
+.nav__list li:nth-child(1) { --i: 0; }
+.nav__list li:nth-child(2) { --i: 1; }
+.nav__list li:nth-child(3) { --i: 2; }
+.nav__list li:nth-child(4) { --i: 3; }
+.nav__cta { --i: 4; }
+
+.nav__list li,
+.nav__cta {
+  opacity: 0;
+  transform: perspective(600px) rotateX(-75deg);
+  transform-origin: top center;
+  /* Closing: everything goes at once */
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.header.is-open .nav__list li,
+.header.is-open .nav__cta {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.45s ease calc(0.2s + var(--i) * 0.09s),
+    transform 0.7s var(--ease-out) calc(0.2s + var(--i) * 0.09s),
+    color 0.45s var(--ease-out); /* the Donate button's hover */
 }
 
 .nav__link {
@@ -499,10 +550,18 @@ button {
   font-stretch: 125%;
   font-size: 1rem;
   font-weight: 500;
+  line-height: 1.2;
   text-transform: uppercase;
+  transition: color var(--transition);
 }
 
+.nav__link:hover {
+  color: var(--color-orange);
+}
+
+/* The page you're on: orange and a step bigger than the rest */
 .nav__link[aria-current='page'] {
+  font-size: 1.375rem;
   color: var(--color-orange);
 }
 
@@ -568,9 +627,25 @@ button {
     color: inherit;
     border: 0;
     box-shadow: none;
-    opacity: 1;
+    width: auto;
+    overflow: visible;
     visibility: visible;
     transform: none;
+    transition: none;
+  }
+
+  .header::before {
+    content: none;
+  }
+
+  .nav__list li,
+  .nav__cta {
+    opacity: 1;
+    transform: none;
+  }
+
+  .nav__cta {
+    transition-property: color;
   }
 
   .nav__list {
@@ -607,7 +682,21 @@ button {
   }
 
   .nav__link[aria-current='page'] {
+    font-size: 0.75rem;
     color: inherit;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav,
+  .header.is-open .nav__list li,
+  .header.is-open .nav__cta {
+    transition: none;
+  }
+
+  .nav__list li,
+  .nav__cta {
+    transform: none;
   }
 }
 
@@ -662,4 +751,296 @@ button {
 
 .to-top:hover svg {
   transform: translateY(-0.2rem);
+}
+
+
+/* ==========================================================================
+   FOOTER (every page)
+   Ink block; the Final CTA's orange hangs into the top as a wave divider.
+   Signup on the left with four small link columns beside it (stacked on
+   phones), then the tagline set across the full width, sized from the
+   screen width so each of its two lines always fits on one row.
+   ========================================================================== */
+
+.footer {
+  position: relative;
+  padding-block: calc(var(--divider-height) + 4.5rem) 2rem;
+  color: rgba(255, 255, 255, 0.72);
+  background-color: var(--color-ink);
+}
+
+.footer .section-divider {
+  --divider-color: var(--color-orange);
+}
+
+.footer__top {
+  display: grid;
+  gap: 3.5rem;
+}
+
+.footer__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-orange);
+}
+
+.footer__title {
+  margin-top: 1rem;
+  font-size: clamp(1.75rem, 5vw, 3rem);
+  line-height: 1.05;
+  color: var(--color-white);
+}
+
+.footer__lead {
+  margin-top: 0.75rem;
+  max-width: 26rem;
+}
+
+.footer__form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+  max-width: 32rem;
+}
+
+.footer__input {
+  flex: 1 1 14rem;
+  min-width: 0;
+  padding: 0.95rem 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius);
+  background-color: rgba(255, 255, 255, 0.04);
+  color: var(--color-white);
+  font: inherit;
+  transition: border-color var(--transition), background-color var(--transition);
+}
+
+.footer__input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.footer__input:focus {
+  outline: none;
+  border-color: var(--color-orange);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.footer__input[aria-invalid='true'] {
+  border-color: var(--color-orange);
+}
+
+.footer__submit {
+  flex: none;
+}
+
+.footer__status {
+  min-height: 1.5em;
+  margin-top: 0.75rem;
+  font-size: 0.9375rem;
+  color: var(--color-white);
+}
+
+.footer__cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.5rem 1.5rem;
+}
+
+.footer__heading {
+  margin-bottom: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.footer__address {
+  font-style: normal;
+}
+
+.footer__list {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.footer__link {
+  color: var(--color-white);
+  background: linear-gradient(var(--color-orange), var(--color-orange)) left bottom / 0% 1px no-repeat;
+  transition: color var(--transition), background-size 0.45s var(--ease-out);
+}
+
+.footer__link:hover,
+.footer__link:focus-visible {
+  color: var(--color-orange);
+  background-size: 100% 1px;
+}
+
+.footer__social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.footer__social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  color: var(--color-white);
+  transition: background-color var(--transition), border-color var(--transition), transform var(--transition);
+}
+
+.footer__social-link:hover,
+.footer__social-link:focus-visible {
+  border-color: var(--color-orange);
+  background-color: var(--color-orange);
+  transform: translateY(-0.15rem);
+}
+
+.footer__social-link svg {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.footer__tagline {
+  margin-top: 4.5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  font-family: var(--font-heading);
+  font-stretch: 125%;
+  font-weight: 600;
+  /* "Located in your" is the longer line, about 11.2em wide; sized from
+     the container (not the screen) so it also fits on very wide screens */
+  font-size: calc((min(100vw, var(--container-width)) - 2 * var(--gutter)) / 11.8);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+.footer__tagline-line {
+  display: block;
+  white-space: nowrap;
+}
+
+.footer__tagline-line + .footer__tagline-line {
+  color: var(--color-orange);
+}
+
+.footer__tagline sup {
+  font-size: 0.3em;
+  vertical-align: super;
+}
+
+.footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 0.8125rem;
+}
+
+.footer__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-heading);
+  font-stretch: 125%;
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+.footer__logo svg {
+  width: 1.5rem;
+  height: auto;
+  fill: var(--color-orange);
+}
+
+/* Legal line with the site credit under it */
+.footer__meta {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.footer__credit a {
+  color: var(--color-white);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: color var(--transition);
+}
+
+.footer__credit a:hover,
+.footer__credit a:focus-visible {
+  color: var(--color-orange);
+}
+
+@media (min-width: 768px) {
+  .footer__meta {
+    text-align: right;
+  }
+}
+
+/* Phones: Visit and Contact get a full row each (the email is too long
+   for half), Explore and Follow share the last row. From 900px all four
+   sit in one row. */
+@media (max-width: 767px) {
+  .footer {
+    padding-bottom: 5.5rem; /* clears the back-to-top button */
+  }
+
+  .footer__col--wide {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 900px) {
+  .footer__cols {
+    grid-template-columns: repeat(4, max-content);
+    justify-content: space-between;
+  }
+
+  .footer__social {
+    flex-wrap: nowrap;
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer {
+    padding-top: calc(var(--divider-height) + 6rem);
+  }
+}
+
+/* Signup and links side by side once there's room for both */
+@media (min-width: 1200px) {
+  .footer__top {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .footer__cols {
+    gap: 2.5rem 3rem;
+    padding-top: 0.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer__social-link:hover,
+  .footer__social-link:focus-visible {
+    transform: none;
+  }
 }

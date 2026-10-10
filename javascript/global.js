@@ -17,6 +17,7 @@ window.addEventListener('scroll', updateHeader, { passive: true });
 /* Mobile menu */
 function setMenu(open) {
   header.classList.toggle('is-open', open);
+  document.documentElement.classList.toggle('menu-open', open);
   navToggle.setAttribute('aria-expanded', String(open));
   navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
 }
@@ -28,6 +29,11 @@ navToggle.addEventListener('click', () => {
 /* Close after choosing a link (covers same-page anchors like #programs) */
 nav.addEventListener('click', (event) => {
   if (event.target.closest('a')) setMenu(false);
+});
+
+/* Tapping the dimmed strip beside the drawer (header::before) closes it */
+header.addEventListener('click', (event) => {
+  if (event.target === header) setMenu(false);
 });
 
 document.addEventListener('keydown', (event) => {
@@ -77,5 +83,32 @@ if (toTop) {
     window.scrollTo({ top: 0 });
     // Hand focus back to the top so keyboard users continue from there
     document.querySelector('.header__logo')?.focus({ preventScroll: true });
+  });
+}
+
+/* Newsletter signup (footer). Not connected to a mailing list yet, same
+   as the live site: it checks the address and thanks the visitor. To
+   connect it, post the email to the provider (Mailchimp, Squarespace
+   Email Campaigns, etc.) where marked below. */
+const newsletter = document.querySelector('[data-newsletter]');
+
+if (newsletter) {
+  const email = newsletter.querySelector('input[type="email"]');
+  const status = document.querySelector('[data-newsletter-status]');
+
+  newsletter.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    if (!email.checkValidity()) {
+      email.setAttribute('aria-invalid', 'true');
+      status.textContent = 'Please enter a valid email address.';
+      email.focus();
+      return;
+    }
+
+    // Send email.value to the mailing list provider here
+    email.removeAttribute('aria-invalid');
+    newsletter.reset();
+    status.textContent = 'Thank you! You’re part of the VI family.';
   });
 }

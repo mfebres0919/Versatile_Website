@@ -1833,10 +1833,34 @@
    ========================================================================== */
 
 .final {
+  position: relative;
+  isolation: isolate;
   padding-block: 6rem;
   text-align: center;
   color: var(--color-ink);
   background-color: var(--color-orange);
+}
+
+/* Wobbling particles behind the copy: an animated SVG (from the Moving
+   Company build, recoloured ink) faded out at the top and bottom edges.
+   Its animation lives inside the file and can't be paused from CSS, so
+   it's left out entirely for reduced motion. */
+.final::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url('../images/svg-backgrounds/wobbling-particles.svg') center / cover no-repeat;
+  opacity: 0.45;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(transparent, #000 15%, #000 85%, transparent);
+  mask-image: linear-gradient(transparent, #000 15%, #000 85%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .final::before {
+    content: none;
+  }
 }
 
 .final__title {
@@ -1905,7 +1929,6 @@
   transition:
     opacity 1s ease,
     transform 1.8s var(--ease-out);
-  transition-delay: inherit;
 }
 
 .has-reveal .final__title.is-visible .final__pill {
@@ -1918,9 +1941,12 @@
   transform: none;
 }
 
-.has-reveal .final__title .final__pill--1 { transition-delay: 0.3s; }
-.has-reveal .final__title .final__pill--2 { transition-delay: 0.6s; }
-.has-reveal .final__title .final__pill--3 { transition-delay: 0.9s; }
+.has-reveal .final__title .final__pill--1,
+.has-reveal .final__title .final__pill--1 img { transition-delay: 0.3s; }
+.has-reveal .final__title .final__pill--2,
+.has-reveal .final__title .final__pill--2 img { transition-delay: 0.6s; }
+.has-reveal .final__title .final__pill--3,
+.has-reveal .final__title .final__pill--3 img { transition-delay: 0.9s; }
 
 .final__text {
   max-width: 38rem;
