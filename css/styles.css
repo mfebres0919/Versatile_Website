@@ -1606,14 +1606,17 @@
 /* ==========================================================================
    CTA — "Our impact so far"
    Warm grey section. .cta__circle is a white layer clipped to a circle
-   whose radius shrinks from "covers everything" (--circle: 0) to a big
-   centred circle (--circle: 1) as the section scrolls in (script.js). The
+   (a tall oval on phones) that shrinks from "covers everything"
+   (--circle: 0) to its final size (--circle: 1) as the section scrolls in (script.js). The
    wave divider hangs the Programs black over the top.
    ========================================================================== */
 
 .cta {
   --circle: 1; /* formed by default: no JS / reduced motion */
-  --circle-end: max(46vw, 30rem);
+  /* Final radii. Phones: a tall oval, since a true circle would be either
+     tiny or wider than the screen. 768px+: a true circle. */
+  --circle-rx: 64vw;
+  --circle-ry: 58%;
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -1632,7 +1635,10 @@
   inset: 0;
   z-index: -1;
   background-color: var(--color-white);
-  clip-path: circle(calc(var(--circle-end) + (150vmax - var(--circle-end)) * (1 - var(--circle))) at 50% 55%);
+  clip-path: ellipse(
+    calc(var(--circle-rx) + (150vmax - var(--circle-rx)) * (1 - var(--circle)))
+    calc(var(--circle-ry) + (150vmax - var(--circle-ry)) * (1 - var(--circle)))
+    at 50% 55%);
   box-shadow: 0 0 80px rgba(18, 15, 16, 0.08);
   will-change: clip-path;
 }
@@ -1721,6 +1727,27 @@
   transition: transform 0.45s var(--ease-out);
 }
 
+/* Attention bounce: two quick hops, then a rest, on a 3.5s loop. Stops
+   while hovered or focused so it's easy to click, and never runs for
+   reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .cta__btn {
+    animation: cta-bounce 3.5s ease-in-out 1.5s infinite;
+  }
+
+  .cta__btn:hover,
+  .cta__btn:focus-visible {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes cta-bounce {
+  0%, 30%, 100% { transform: translateY(0); }
+  7%            { transform: translateY(-0.75rem); }
+  14%           { transform: translateY(0); }
+  21%           { transform: translateY(-0.5rem); }
+}
+
 .cta__btn:hover {
   background-color: var(--color-orange);
   box-shadow: 0 16px 32px rgba(218, 87, 38, 0.35);
@@ -1751,6 +1778,13 @@
 
 .cta__email a:hover {
   color: var(--color-orange-dark);
+}
+
+@media (min-width: 768px) {
+  .cta {
+    --circle-rx: max(46vw, 30rem);
+    --circle-ry: max(46vw, 30rem);
+  }
 }
 
 @media (min-width: 1024px) {

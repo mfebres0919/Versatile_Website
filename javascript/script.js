@@ -265,3 +265,37 @@ if (programItems.length) {
 
   programItems.forEach((item) => programObserver.observe(item));
 }
+
+
+/* ==========================================================================
+   HOMEPAGE — CTA circle
+   --circle runs 0 → 1 while the section's top travels from the foot of the
+   screen to a fifth of the way down: the white layer starts out covering
+   everything and shrinks into a circle (styles.css). Reduced motion: left
+   at the CSS default of 1, so the circle is simply already formed.
+   ========================================================================== */
+
+const cta = document.querySelector('[data-cta]');
+
+if (cta && !reduceMotion) {
+  let ctaTicking = false;
+
+  function updateCta() {
+    const top = cta.getBoundingClientRect().top;
+    const travel = window.innerHeight * 0.8;
+    const p = Math.min(Math.max((window.innerHeight - top) / travel, 0), 1);
+    const eased = 1 - Math.pow(1 - p, 2);
+    cta.style.setProperty('--circle', eased.toFixed(3));
+    ctaTicking = false;
+  }
+
+  const requestCtaUpdate = () => {
+    if (ctaTicking) return;
+    ctaTicking = true;
+    requestAnimationFrame(updateCta);
+  };
+
+  updateCta();
+  window.addEventListener('scroll', requestCtaUpdate, { passive: true });
+  window.addEventListener('resize', requestCtaUpdate);
+}
